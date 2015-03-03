@@ -1,12 +1,12 @@
 
 
                       /**Start of Function Definitions**/
-			/**TOAST PLUGIN**/
+      /**TOAST PLUGIN**/
 function toastAlert(msg){
-	//This is used for showing the alerts in Toast style in Center
-	window.plugins.toast.showLongCenter(msg);
+  //This is used for showing the alerts in Toast style in Center
+  window.plugins.toast.showLongCenter(msg);
 }
-			/**BATTERY PLUGIN**/
+      /**BATTERY PLUGIN**/
 function onBatteryStatus(info) {
     $("#btp").text(" ");
     if (info.isPlugged==true) $("#btp").text(" Phone is Charging and you have "+ info.level +" % charge");
@@ -18,7 +18,7 @@ function onBatteryStatus(info) {
     }, 3000);   */
 }
 
-			/**CONTACTS PLUGIN**/
+      /**CONTACTS PLUGIN**/
 
 /*function contactPrompt(){
   navigator.notification.prompt("Contact Name","Contact Number",contactPromptExit,"Create New Contact",['Save','Cancel']);
@@ -34,7 +34,7 @@ function saveContact(){
   newcontact.save(onContactSaveSuccess,onContactSaveFail);
 }
 function onContactSaveSuccess(){
-	toastAlert("Saved Contact Successfully");
+  toastAlert("Saved Contact Successfully");
 }
 function onContactSaveFail(){
   toastAlert("Unable to Save Contact");
@@ -67,7 +67,7 @@ function onContactSearchError(contactError){
   alert('onError!');
 }
 
-			/**DEVICE PLUGIN**/
+      /**DEVICE PLUGIN**/
 function deviceCheck(){
     $("#dp").text("");
     var cordova_version=device.cordova;
@@ -84,9 +84,9 @@ function deviceCheck(){
         );
 }
 
-			/**GEOLOCATION PLUGIN**/
-	//Called to get Geolocation Info
-	var geolocationSuccess=function(position){		
+      /**GEOLOCATION PLUGIN**/
+  //Called to get Geolocation Info
+  var geolocationSuccess=function(position){    
     $("#gp").text(" ");
 $("#gp").text('Latitude: '      + position.coords.latitude          + '\n' +
           'Longitude: '         + position.coords.longitude         + '\n' +
@@ -96,24 +96,24 @@ $("#gp").text('Latitude: '      + position.coords.latitude          + '\n' +
           'Heading: '           + position.coords.heading           + '\n' +
           'Speed: '             + position.coords.speed             + '\n' +
           'Timestamp: '         + position.timestamp                + '\n');
-	}
+  }
 
-	//Called on Geolocation Error
-	function geolocationError(error){
-		//alert('code: '    + error.code    + '\n' +
+  //Called on Geolocation Error
+  function geolocationError(error){
+    //alert('code: '    + error.code    + '\n' +
           //'message: ' + error.message + '\n');
   alert("Please Turn on GPS");
-	}
+  }
 
-	//Called to Print Geolocation Value in a Paragraph
-	function onGeolocationSuccess(position){
-		var geopara=document.getElementById('georeading');
-		geopara.innerHTML='Latitude: '  + position.coords.latitude      + '\n' +
+  //Called to Print Geolocation Value in a Paragraph
+  function onGeolocationSuccess(position){
+    var geopara=document.getElementById('georeading');
+    geopara.innerHTML='Latitude: '  + position.coords.latitude      + '\n' +
                         'Longitude: ' + position.coords.longitude     + '\n' +
                         '<hr />'      + geopara.innerHTML;
-	}
+  }
 
-			/**INTERNET-INFORMATION PLUGIN**/
+      /**INTERNET-INFORMATION PLUGIN**/
 function checkConnection() {
     $("#np").text(" ");
     networkState = navigator.connection.type;
@@ -132,7 +132,7 @@ function checkConnection() {
 }
 
 
-			/**ACCELEROMETER PLUGIN**/
+      /**ACCELEROMETER PLUGIN**/
 /*function accelerometerSuccess(acceleration) {
     toastAlert(
           'Acceleration X: ' + acceleration.x + '\n' +
@@ -142,7 +142,7 @@ function checkConnection() {
 }
 //Not Working
 function onWatchAccelSuccess(acceleration){
-	//toastAlert("I am working");
+  //toastAlert("I am working");
 var acceleratoReading=document.getElementById("accelreading");
       acceleratoReading.innerHTML= 'Acceleration X: ' + acceleration.x + '\n' +
           'Acceleration Y: ' + acceleration.y + '\n' +
@@ -155,8 +155,9 @@ function accelerometerError() {
 }; */
 function accelBall(){
   //alert("I am Going to Accelerate Ball");
-   iW = window.innerWidth;
+     iW = window.innerWidth;
      iH = window.innerHeight;
+     //alert("iW: "+iW+"iH: "+iH);
      canvas= document.getElementById('myCanvas');
     cnv = canvas.getContext("2d");
     cnv.canvas.width = iW;
@@ -164,30 +165,36 @@ function accelBall(){
     target=new Image();
     target.src = "Bomb.png";
     xPos = (iW-target.width)/2;
-     yPos = (iH-target.height)/2;
+    yPos = (iH-target.height)/2;
+    //alert("xpos: "+xPos+"ypos: "+yPos);
     target.onload = function()
       {
           cnv.drawImage(target, xPos, yPos);
       }
    watch = navigator.accelerometer.watchAcceleration(success, 
-          failure, {frequency: 25});
+          failure, {frequency: 100});
 }
 function success(accel){
   cnv.clearRect(0, 0, canvas.width, canvas.height);
     xPos += -1*(accel.x * 1.5);
     yPos += (accel.y * 1.5);
-    cnv.drawImage(target, xPos, yPos);
+    //alert("cxpos: "+xPos+"cypos: "+yPos);
+    if (xPos>iW||yPos>iH) {
+      cnv.clearRect(0, 0, canvas.width, canvas.height);
+      accelBall();}
+    else cnv.drawImage(target, xPos, yPos);
+    
   }
   function failure()
             {
                 toastAlert("Error");
             }
 
-			/**CAMERA PLUGIN**/
+      /**CAMERA PLUGIN**/
 //Used to save the Picture took in Camera in base64 format
 function onDataCameraSuccess(imageData){
     var pic=document.getElementById("picbox");
-	pic.src = "data:image/jpeg;base64," + imageData;
+  pic.src = "data:image/jpeg;base64," + imageData;
 }
 
 //Used to save the Picture took in Camera as FileURL
@@ -200,12 +207,12 @@ function onFileCameraSuccess(imageURI){
 
 
 function onCameraFail(message){
-	toastAlert(message);
+  toastAlert(message);
 }
 
-			/**DIALOGS PLUGIN**/
+      /**DIALOGS PLUGIN**/
 
-					/*Alert Box Methods*/
+          /*Alert Box Methods*/
 //Used to Open an Alertbox
 function dialogAlerter(){
 navigator.notification.alert("This is an Alert box created using Notification Plugin",alertExit,"Alert Dialog","Understood");
@@ -213,34 +220,34 @@ navigator.notification.alert("This is an Alert box created using Notification Pl
 
 //Called when alertbox closed
 function alertExit(){
-	toastAlert("You have closed an Alert box");
+  toastAlert("You have closed an Alert box");
 }
-					/*Confirm Box Methods*/
+          /*Confirm Box Methods*/
 //Used to Open Confirmbox
 function confirmAlerter(){
-	navigator.notification.confirm("This is an Confirmbox",confirmExit,"Confirm Dialog",['Ok','Cancel']);
+  navigator.notification.confirm("This is an Confirmbox",confirmExit,"Confirm Dialog",['Ok','Cancel']);
 }
 
 //Called when Confirmbox closed
 function confirmExit(buttonIndex){
-	if (buttonIndex==1) toastAlert("You have Clicked Ok Button");
-	else toastAlert("You have Clicked Cancel Button")
+  if (buttonIndex==1) toastAlert("You have Clicked Ok Button");
+  else toastAlert("You have Clicked Cancel Button")
 }
-					/*Prompt Box Methods*/
+          /*Prompt Box Methods*/
 //Used to Open Promptbox
 function promptAlerter(){
-	navigator.notification.prompt("Enter Your Name",promptExit,"Prompt Dialog",['Save','Cancel']);
+  navigator.notification.prompt("Enter Your Name",promptExit,"Prompt Dialog",['Save','Cancel']);
 }
 
 //Called when Promptbox Closed
 function promptExit(results){
-	if (results.buttonIndex==1&&results.input1!="")toastAlert("Welcome "+results.input1);
-	else toastAlert("Sorry to let you go"); 
+  if (results.buttonIndex==1&&results.input1!="")toastAlert("Welcome "+results.input1);
+  else toastAlert("Sorry to let you go"); 
 }
-					/*Beep Methods*/
+          /*Beep Methods*/
 //Used to Produce Beep Button
 function beepAlerter(){
-	navigator.notification.beep(2);
+  navigator.notification.beep(2);
 }
 
           /**End of Function Definitions**/
