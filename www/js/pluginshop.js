@@ -56,7 +56,7 @@ function onContactSearchSuccess(contacts){
   var platform=device.platform;
   for(var i=0;i<contacts.length;i++){
     if (platform=="iOS") {
-    $("#contactlist").append("<li id='"+i+"'><a href='#'>"+contacts[i].nickname+"</a></li>");
+    $("#contactlist").append("<li id='"+i+"'><a href='#'>"+contacts[i].name+"</a></li>");
     }
     else $("#contactlist").append("<li id='"+i+"'><a href='#'>"+contacts[i].displayName+"</a></li>");
   }
