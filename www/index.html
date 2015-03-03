@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+       <script type="text/javascript" src="js/jquery-2.1.1.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>  
+        <script type="text/javascript" src="js/pluginshop.js"></script>     
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+       <link rel="stylesheet" href="themes/PluginShop.css" />
+        <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />       
+        <title>PluginShop</title>
+        
+    </head>
+    <body>
+
+                        <!--Home Page-->
+        <section id="landingpage" data-role="page">
+            <header data-role="header" data-theme="c" data-position="fixed">
+                <h1>PluginShop</h1>
+            </header>
+            <article data-role="content" id="mainarea">
+                <ul data-role="listview" data-inset="true" data-theme="c" data-autodividers="true" data-icon="false">
+                    <li>
+                       <a href="#accelerometer" id="accel" data-transition="flip">Accelerometer
+                       <p>Tap into the device's motion sensor.</p> 
+                       </a>
+                    </li>
+                    <li>
+                       <a href="#"   id="btcha">Battery Status
+                       <p>Monitor the status of the device's battery.</p> 
+                       </a>
+                    </li>
+
+                    <li>
+                       <a href="#camera" data-transition="flip">Camera
+                       <p>Capture a photo using the device's camera.</p> 
+                       </a>
+                    </li>
+
+                    <li>
+                       <a href="#contacts" data-transition="flip">Contacts
+                       <p>Work with the devices contact database.</p> 
+                       </a>
+                    </li>                     
+
+                    <li>
+                       <a href="#device" data-transition="flip" id="deviceinfobtn">Device
+                       <p>Gather device specific information.</p> 
+                       </a>
+                    </li>                   
+
+                    <li>
+                       <a href="#dialogs" data-transition="flip">Dialogs
+                       <p>Visual device notifications.</p> 
+                       </a>
+                    </li>
+					
+
+                    <li>
+                       <a href="#geolocation" data-transition="flip" id="curlocation">Geolocation
+                       <p>Make your application location aware.</p> 
+                       </a>
+                    </li>
+
+                    
+
+                    <li>
+                       <a href="#inappbrowser" data-transition="flip">InAppBrowser
+                       <p>Launch URLs in another in-app browser instance.</p> 
+                       </a>
+                    </li>
+
+                    
+
+                    <li>
+                       <a href="#network" data-transition="flip" id="connectchkbtn">Network Information
+                       <p>Quickly check your network information.</p> 
+                       </a>
+                    </li>
+
+                    <li>
+                       <a href="#splashscreen" data-transition="flip">SplashScreen
+                       <p>Show and hide the applications splash screen.</p> 
+                       </a>
+                    </li>
+
+                    <li>
+                       <a href="#vibration" data-transition="flip">Vibration
+                       <p>An API to vibrate the device.</p> 
+                       </a>
+                    </li>
+
+                </ul>
+            </article>
+            <footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
+                              <!--Battery Page-->
+       <section data-role="page" id="battery" data-close-btn="none" data-dialog="true">
+        	<header data-role="header" data-theme="c" >
+        	<h1>Battery Plugin</h1>
+        	</header>
+        	<article data-role="content">
+          <p id="btp"></p>        	
+        	</article>
+        	<footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
+                        <!--Accelerometer Page-->
+        <section data-role="page" id="accelerometer">
+            <header data-role="header" data-theme="c">
+            <h1>Accelerometer</h1>
+            </header>
+            <article data-role="main">              
+                <canvas id="myCanvas" ></canvas>
+            </article>
+            <footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
+                          <!--Camera Page-->
+        <section data-role="page" id="camera" data-close-btn="none" data-dialog="true">
+        	<header data-role="header" data-theme="c">
+        		<h1>Camera Plugin</h1>
+        	</header>
+        	<article data-role="content">
+        		<center>
+        			<input type="button" id="tkpicbasebtn" value="Data URL" />
+        			<input type="button" id="tkpicfileurlbtn" value="File URL" />              		
+              <input type="button" id="tkpiclibrary" value="Open PhotoLibrary" />
+        			<img src="" id="picbox" style="width:200px;height:200px">
+        		</center>
+        	</article>
+        	<footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
+                        <!--Contacts Page-->
+        <section data-role="page" id="contacts" data-close-btn="none" data-dialog="true">
+          <header data-role="header" data-theme="c">
+            <h1>Contacts Plugin</h1>
+          </header>
+          <article data-role="content">
+            <center>              
+              <a href="#createcontact-page" data-role="button" id="createcontactbtn" >Create Contact</a>
+              <a href="#searchcontact-page" data-role="button" id="searchcontactbtn">Search Contact</a>
+              <!--<input type="button" id="findcontactbtn" value="Find Contact" /> -->                       
+            </center>
+          </article>
+          <footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+                      <!--Add Contacts Page-->
+        <section data-role="page" id="createcontact-page" data-close-btn="none" data-dialog="true">
+          <header data-role="header" data-theme="c">
+            <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-role="button">Back</a>
+            <h1>Add Contacts</h1>
+          </header>
+          <article data-role="main">
+            <label for="cname">Name:</label>
+            <input type="text" placeholder="Name" id="cname" />
+            <label for="cnum">Number:</label>
+            <input type="tel" placeholder="Number" id="cnum" />           
+            <a href="#" data-rel="back" data-role="button" id="scbtn">Save Contact</a>
+          </article>
+        </section>
+
+                      <!--Search Contact Page-->
+        <section data-role="page" id="searchcontact-page" data-close-btn="none" data-dialog="true">
+          <header data-role="header" data-theme="c">
+            <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-role="button">Back</a>
+            <h1>Search Contacts</h1>
+          </header>
+          <article data-role="main">
+            <label for="sname">Contact Name:</label>
+            <input type="text" id="sname" placeholder="Name" />
+            <input type="button" id="secbtn" value="Search" />
+            <ul id="contactlist" data-role="listview"></ul>
+          </article>
+        </section>
+
+                        <!--Device Page-->
+		<section data-role="page" id="device" data-close-btn="none" data-dialog="true">
+          <header data-role="header" data-theme="c">
+            <h1>Device Plugin</h1>
+          </header>
+          <article data-role="content">
+            <p id="dp"></p>
+          </article>
+          <footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
+      <section data-role="page" id="geolocation" data-close-btn="none" data-dialog="true">
+        	<header data-role="header" data-theme="c" >
+        	<h1>Geolocation Plugin</h1>
+        	</header>
+        	<article data-role="content">        		
+        			<p id="gp"></p>
+        			<!--<input type="button" id="curlocation" value="Current Position" />
+        			<input type="button" id="locationwatch" value="Watch Position" />
+        			<input type="button" id="cleargeo" value="Clear Position" /> -->       			 
+        		
+        	</article>
+        	<footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+<section data-role="page" id="inappbrowser" data-close-btn="none" data-dialog="true">
+        	<header data-role="header" data-theme="c">
+        		<h1>InAppBrowser Plugin</h1>
+        	</header>
+        	<article data-role="content">
+        		<center>
+        			<input type="button" id="inappbtn" value="Add Me" />       			       	
+        		</center>
+        	</article>
+        	<footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
+       <section data-role="page" id="network" data-close-btn="none" data-dialog="true">
+        	<header data-role="header" data-theme="c">
+        		<h1>Network Plugin</h1>
+        	</header>
+        	<article data-role="content">
+        		<!--<center>
+        			<input type="button" id="connectchkbtn" value="Check Your Network Info" />
+        			<input type="button" id="tkpicfileurlbtn" value="File URL" />        			
+        		</center>-->
+            <p id="np"></p>
+        	</article>
+        	<footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
+        <!--<section data-role="page" id="accelerometer" data-close-btn="none" data-dialog="true">
+        	<header data-role="header" data-theme="c" >
+        	<h1>Device-Motion Plugin</h1>
+        	</header>
+        	<article data-role="content">
+        		<center>        			
+        			<input type="button" id="accel" value="Current Acceleration" />
+        			<input type="button" id="accelwatch" value="Watch Acceleration" />
+        			<!--<input type="button" id="clearwatch" value="Clear Acceleration" /> 
+        			<p id="accelreading"></p>
+        		</center>
+        	</article>
+        	<footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section> -->
+
+                      <!--Dialogs page-->
+        <section data-role="page" id="dialogs" data-close-btn="none" data-dialog="true">
+          <header data-role="header" data-theme="c" >
+          <h1>Dialogs Plugin</h1>
+          </header>
+          <article data-role="content">
+            <center>              
+              <input type="button" id="alertbtn" value="Alert" />
+              <input type="button" id="confirmbtn" value="Confirm" /> 
+              <input type="button" id="promptbtn" value="Prompt" />
+              <input type="button" id="beepbtn" value="Beep">
+            </center>
+          </article>
+          <footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
+                      <!--Vibration Page-->
+        <section data-role="page" id="vibration" data-close-btn="none" data-dialog="true">
+          <header data-role="header" data-theme="c" >
+          <h1>Vibration Plugin</h1>
+          </header>
+          <article data-role="content">
+            <center>              
+              <input type="button" id="simplevib" value="Simple Vibration" />
+              <input type="button" id="patternedvib" value="Patterned Vibration">
+            </center>
+          </article>
+          <footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
+                      <!--Splashscreen Page-->
+        <section data-role="page" id="splashscreen" data-close-btn="none" data-dialog="true">
+        	<header data-role="header" data-theme="c" >
+        	<h1>Splash Screen Plugin</h1>
+        	</header>
+        	<article data-role="content">
+        		<center>        			
+        			<input type="button" id="showsplash" value="Show Splash" />
+        		</center>
+        	</article>
+        	<footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+        <script type="text/javascript" src="cordova.js"></script>
+        
+    </body>
+</html>
