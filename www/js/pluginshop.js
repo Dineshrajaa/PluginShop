@@ -360,11 +360,11 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
               /**SPLASHSCREEN PLUGIN**/
     //Used to Show the Splash Screen
     $("#showsplash").tap(function(){
-      /*navigator.splashscreen.show();
+      navigator.splashscreen.show();
       setTimeout(function() {
         navigator.splashscreen.hide();
-    }, 2000);*/
-    navigator.splashscreen.show(3000);
+    }, 3000);
+    //navigator.splashscreen.show(3000);
     });  
 
     $(".informer").tap(function(){
