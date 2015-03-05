@@ -8,8 +8,10 @@
         <script type="text/javascript" src="js/pluginshop.js"></script>     
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
        <link rel="stylesheet" href="themes/PluginShop.css" />
+       <script type="text/javascript" src="js/compass.js"></script>
         <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />       
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" />
+        <link rel="stylesheet" href="css/compass.css" type="text/css">       
         <title>PluginShop</title>
         
     </head>
@@ -43,7 +45,13 @@
                        <a href="#contacts" data-transition="flip">Contacts
                        <p>Work with the devices contact database.</p> 
                        </a>
-                    </li>                     
+                    </li>  
+
+                    <li>
+                       <a href="#compass-page" data-transition="flip">Compass
+                       <p>Shows Directions</p> 
+                       </a>
+                    </li>                   
 
                     <li>
                        <a href="#device" data-transition="flip" id="deviceinfobtn">Device
@@ -162,6 +170,27 @@
                 </div>
             </footer>
         </section>
+
+                        <!--Compass Page-->
+         <section data-role="page" id="compass-page" >
+          <header data-role="header" data-theme="c">
+            <h1>Compass Plugin</h1>
+          </header>
+          <article data-role="content">
+                <div id="compass"><img src="resource/compass_rose.png"></div>
+                <div id="needle"><img src="resource/needle.png"></div>
+                <div id="info-panel"></div>
+          </article>
+          <footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
 
                         <!--Contacts Page-->
         <section data-role="page" id="contacts" data-close-btn="none" data-dialog="true">
