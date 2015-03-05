@@ -74,27 +74,21 @@ function deviceCheck(){
     var platform=device.platform;
     var uuid=device.uuid;
     var version=device.version;    
-    $("#dp").text(
-        "Cordova version:"+ cordova_version+"\n"+ 
-        "Device Model:"+ device_model+"\n"+
-        "OS Name:"+ platform+"\n"+
-        "UUID:"+ uuid+"\n"+
-        "OS version:"+ version
-        );
+    $("#dp").html('<strong>Cordova version:</strong><span style="color:#66FFFF">'+ cordova_version+'</span><br/>'+'<strong>Device Model:</strong><span style="color:#3785B8">'+ device_model+'</span><br/>'+'<strong>OS Name:</strong><span style="color:#4DB870">'+ platform+'</span><br/>'+'<strong>UUID:</strong><span style="color:#B288B2">'+ uuid+'</span><br/>'+'<strong>OS version:</strong><span style="color:#669999">'+ version+'</span>');
 }
 
       /**GEOLOCATION PLUGIN**/
   //Called to get Geolocation Info
   var geolocationSuccess=function(position){    
     $("#gp").text(" ");
-$("#gp").text('Latitude: '      + position.coords.latitude          + '\n' +
-          'Longitude: '         + position.coords.longitude         + '\n' +
-          'Altitude: '          + position.coords.altitude          + '\n' +
-          'Accuracy: '          + position.coords.accuracy          + '\n' +
-          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-          'Heading: '           + position.coords.heading           + '\n' +
-          'Speed: '             + position.coords.speed             + '\n' +
-          'Timestamp: '         + position.timestamp                + '\n');
+$("#gp").html('Latitude: '      + position.coords.latitude          + '<br/>' +
+          'Longitude: '         + position.coords.longitude         + '<br/>' +
+          'Altitude: '          + position.coords.altitude          + '<br/>' +
+          'Accuracy: '          + position.coords.accuracy          + '<br/>' +
+          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '<br/>' +
+          'Heading: '           + position.coords.heading           + '<br/>' +
+          'Speed: '             + position.coords.speed             + '<br/>' +
+          'Timestamp: '         + position.timestamp                + '<br/>');
   }
 
   //Called on Geolocation Error
@@ -105,8 +99,8 @@ $("#gp").text('Latitude: '      + position.coords.latitude          + '\n' +
   //Called to Print Geolocation Value in a Paragraph
   function onGeolocationSuccess(position){
     var geopara=document.getElementById('georeading');
-    geopara.innerHTML='Latitude: '  + position.coords.latitude      + '\n' +
-                        'Longitude: ' + position.coords.longitude     + '\n' +
+    geopara.innerHTML='Latitude: '  + position.coords.latitude      + '<br/>' +
+                        'Longitude: ' + position.coords.longitude     + '<br/>' +
                         '<hr />'      + geopara.innerHTML;
   }
 
@@ -393,7 +387,7 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
       customAlert("PluginShop"+"\n"+"Version-0.0.1"+"\n"+"Developer-Dinesh Raja","About");
     });     
     
-    StatusBar.overlaysWebView(true);
+    StatusBar.overlaysWebView(false);
      
       });         
           },false);
