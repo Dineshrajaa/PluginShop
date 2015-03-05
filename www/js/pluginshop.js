@@ -13,8 +13,14 @@ function customAlert(msg,title){
       /**BATTERY PLUGIN**/
 function onBatteryStatus(info) {
     //Callback method of Battery Status plugin
-    if (info.isPlugged==true) $("#btp").text(" Phone is Charging and you have "+ info.level +" % charge");//Works if Charging
-    else $("#btp").text(" Phone is on Battery and you have "+ info.level +" % charge");//Works on Battery
+    if (info.isPlugged==true) {
+    $("#btp").html(" Phone is Charging and you have <strong>"+ info.level +" % charge</strong>");//Works if Charging
+    $("#batterypic").attr("src","img/plugged.png");
+  }
+    else {
+    $("#btp").html(" Phone is on Battery and you have <strong>"+ info.level +" % charge</strong>");//Works on Battery
+    $("#batterypic").attr("src","img/unplugged.png");
+  }
     
 }
 
@@ -74,7 +80,10 @@ function deviceCheck(){
     var platform=device.platform;
     var uuid=device.uuid;
     var version=device.version;    
-    $("#dp").html('<strong>Cordova version:</strong><span style="color:#66FFFF">'+ cordova_version+'</span><br/>'+'<strong>Device Model:</strong><span style="color:#3785B8">'+ device_model+'</span><br/>'+'<strong>OS Name:</strong><span style="color:#4DB870">'+ platform+'</span><br/>'+'<strong>UUID:</strong><span style="color:#B288B2">'+ uuid+'</span><br/>'+'<strong>OS version:</strong><span style="color:#669999">'+ version+'</span>');
+    $("#dp").html('<strong>Cordova version:</strong><span style="color:#66FFFF;float: right;text-align: right;">'+ cordova_version+'</span><br/>'+'<strong>Device Model:</strong><span style="color:#3785B8;float: right;text-align: right;">'+ device_model+'</span><br/>'+'<strong>OS Name:</strong><span style="color:#4DB870;float: right;text-align: right;">'+ platform+'</span><br/>'+'<strong>UUID:</strong><span style="color:#B288B2;float: right;text-align: right;">'+ uuid+'</span><br/>'+'<strong>OS version:</strong><span style="color:#669999;float: right;text-align: right;">'+ version+'</span>');
+    if (platform=="iOS") $("#ospic").attr("src","img/ios.png");
+    else if (platform=="Android") $("#ospic").attr("src","img/android.png");
+    else $("#ospic").remove();
 }
 
       /**GEOLOCATION PLUGIN**/
@@ -188,9 +197,8 @@ function onDataCameraSuccess(imageData){
 //Used to save the Picture took in Camera as FileURL
 function onFileCameraSuccess(imageURI){
     var pic=document.getElementById("picbox");
-    pic.src="";
-    toastAlert("Picture saved in " +imageURI);
-    pic.src = imageURI;
+    pic.src = imageURI;    
+    toastAlert("Picture saved in " +imageURI);    
 }
 
 
@@ -281,10 +289,10 @@ $(document).ready(function(){
         });
 
       //Used for Opening the Gallery
-      $("#tkpicgallery").tap(function(){        
+      /*$("#tkpicgallery").tap(function(){        
         navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
      {sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM});
-      });
+      }); */
 
       $("#tkpiclibrary").tap(function(){
 navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
