@@ -150,11 +150,11 @@ var acceleratoReading=document.getElementById("accelreading");
 
 function accelerometerError() {
     toastAlert('onError!');
-}; */
+}; 
 function accelBall(){  
   //Method to move the ball on screen based on the Device motion
-    iW = window.innerWidth;//Measures screen width     
-    iH = window.innerHeight-40;//Measures screen Height     
+    iW = window.innerWidth-5;//Measures screen width     
+    iH = window.innerHeight-88;//Measures screen Height     
     canvas= document.getElementById('myCanvas');//Selects the canvas which is present in the html page
     cnv = canvas.getContext("2d");
     cnv.canvas.width = iW;
@@ -186,7 +186,7 @@ function success(accel){
             {
                 toastAlert("Error");
             }
-
+*/
       /**CAMERA PLUGIN**/
 //Used to save the Picture took in Camera in base64 format
 function onDataCameraSuccess(imageData){
@@ -253,10 +253,35 @@ function beepAlerter(){
 $(document).ready(function(){
     //DOM Fully Loaded
           //Global Declarations
-          var iW,iH,canvas,cnv,target,xPos,yPos,watch,networkState;
+    var iW=window.innerWidth;
+    var iH=window.innerHeight;
+    var hH=$('header').outerHeight() || 0;
+    var fH=$('footer').outerHeight() || 0;
+  //var hW=$('header').outerWidth() || 0;
+  //var fW=$('footer').outerWidth() || 0;
+    var canvas_ctx;
+    var x; // Circle x position
+    var y; // Circle Y position
+    var ax = 0;//Acceleration X axis
+    var ay = 0;//Acceleration Y axis
+    var vx = 0;// Velocity x axis
+    var vy = 0;// Velocity y axis    
+    var DISTANCE_FACTOR = .1;
+    var drawID;// Draw time interval.
+    var SPEED = 180;
+    var WIDTH = iW-20;                // Width of canvas
+    var HEIGHT = iH-hH-fH-5;               // -(hH+fH)Height of canvas
+    var RADIUS = 30;                // Width of circle object
+    var CIRCLE_COLOR = "#f00";      // Circle color
+    var CANVAS_COLOR = "#FAF7F8";   // Color of canvas background
+    var watchID;                    // Accelerometer.watchAcceleration return value. 
+    var drawID;                     // Draw time interval. 
+    var playing = true;             // Boolean if animation is playing.
+    var watch,networkState;
+          //var iW,iH,canvas,cnv,target,xPos,yPos
           document.addEventListener("deviceready",function(){
             //Device Ready
-            $(document).on("pageshow","#vibration",function() {
+            $(document).on("pageinit","#vibration",function() {
         //Makes the Map to appear properly                                
            if (device.platform=="iOS") $("#patternedvib").remove();                        
         });
@@ -322,13 +347,14 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
       //Used for Accelerometer Current Device Position
       $("#accel").tap(function(){
         //navigator.accelerometer.getCurrentAcceleration(accelerometerSuccess, accelerometerError);
-        accelBall();
+        //accelBall();
+        showCanvas();
       });
 
       //Used for Accelerometer Device Movement tracking
-      $("#accelwatch").tap(function(){
+      /*$("#accelwatch").tap(function(){
         var accelId=navigator.accelerometer.watchAcceleration(onWatchAccelSuccess,accelerometerError,{frequency:1000});
-      });
+      });*/
 
       
 
