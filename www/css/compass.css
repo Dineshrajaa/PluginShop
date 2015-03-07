@@ -40,4 +40,13 @@ div.ui-slider-switch {
     padding: 10px 40px; 
     background: #dddddd;
     border-radius: 25px;
+    box-shadow: 10px 10px 5px #aee7fa;
+}
+
+#homenav {
+    background-color: #aee7fa;
+}
+
+#informer{
+    background-color: #aee7fa;
 }

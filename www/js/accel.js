@@ -14,10 +14,10 @@ $(document).ready(function(){
     var vy = 0;// Velocity y axis    
     var DISTANCE_FACTOR = .1;
     var drawID;// Draw time interval.
-    var SPEED = 180;
-    var WIDTH = iW-20;                // Width of canvas
-    var HEIGHT = iH-hH-fH-5;               // -(hH+fH)Height of canvas
-    var RADIUS = 30;                // Width of circle object
+    var SPEED = 25;
+    var WIDTH = iW;                // Width of canvas
+    var HEIGHT = iH-hH-fH;               // -(hH+fH)Height of canvas
+    var RADIUS = 10;                // Width of circle object
     var CIRCLE_COLOR = "#f00";      // Circle color
     var CANVAS_COLOR = "#FAF7F8";   // Color of canvas background
     var watchID;                    // Accelerometer.watchAcceleration return value. 

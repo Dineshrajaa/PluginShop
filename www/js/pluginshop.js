@@ -48,28 +48,57 @@ function searchContact(){
   var options      = new ContactFindOptions();//Creates options for finding contacts
   options.filter   =$("#sname").val();//Creates a filter from the input
   options.multiple = true;//Returns multiple matching results
-  options.desiredFields = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];//Desired Fields in which the Filter has to be matched
-  var fields       = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];//Fields in which the Filter has to be matched
+  options.desiredFields = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.nickname];//Desired Fields in which the Filter has to be matched
+  var fields       = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];//Fields in which the Filter has to be matched
   navigator.contacts.find(fields, onContactSearchSuccess, onContactSearchError, options);//Find contacts
 }
 
-function onContactSearchSuccess(contacts){  
+function specificContactFetch(uid){
+  //Method to Find the details of the specific contact
+  var options      = new ContactFindOptions();//Creates options for finding contacts
+  options.filter   =uid;//Creates a filter from the input
+  options.multiple = false;//Returns multiple matching results
+  options.desiredFields = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.nickname];//Desired Fields in which the Filter has to be matched
+  var fields       = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];//Fields in which the Filter has to be matched
+  navigator.contacts.find(fields,onContactSelect,onContactSearchError);
+}
+
+function onContactSelect(contacts){
+  alert(contacts[0].displayName);
+}
+
+function onContactSearchSuccess(contacts){
+//Method to Print the list of contacts  
   $("#contactlist").html(" ");
   var platform=device.platform;
   for(var i=0;i<contacts.length;i++){
     //Creates a Contact list based on the results obtained
     if (platform=="iOS") {
       //Works only on iOS
-    $("#contactlist").append("<li id='"+i+"'><a href='#'>"+contacts[i].nickname+"</a></li>");
+    $("#contactlist").append("<li id='"+contacts[i].id+"'><a href='#'>"+contacts[i].nickname+"</a></li>");
     }
     //Works on Android
-    else $("#contactlist").append("<li id='"+i+"'><a href='#'>"+contacts[i].displayName+"</a></li>");
+    else $("#contactlist").append("<li id='"+contacts[i].id+"'><a href='#'>"+contacts[i].displayName+"</a></li>");
   }
   $("#contactlist").listview("refresh");
 }
 
 function onContactSearchError(contactError){
   alert('onError!');
+}
+
+function pickContact(){
+  //Method to display Contact Picker
+  navigator.contacts.pickContact(onContactPick,onContactSearchError);
+}
+
+function onContactPick(contact){
+  //Callback Function for ContactPick
+  var selectedcontactdata=JSON.stringify(contact);
+  var parsedcontact=JSON.parse(selectedcontactdata);  
+  $(":mobile-pagecontainer").pagecontainer("change","#pickedcontactdata-page");
+  $("#pcp").html("<strong>Name:</strong><br/>"+parsedcontact.displayName || parsedcontact.nickname+"<br/><strong>Number:</strong><br/>"+parsedcontact.phoneNumbers[0].value);
+
 }
 
       /**DEVICE PLUGIN**/
@@ -80,7 +109,7 @@ function deviceCheck(){
     var platform=device.platform;
     var uuid=device.uuid;
     var version=device.version;    
-    $("#dp").html('<strong>Cordova version:</strong><span style="color:#66FFFF;float: right;text-align: right;">'+ cordova_version+'</span><br/>'+'<strong>Device Model:</strong><span style="color:#3785B8;float: right;text-align: right;">'+ device_model+'</span><br/>'+'<strong>OS Name:</strong><span style="color:#4DB870;float: right;text-align: right;">'+ platform+'</span><br/>'+'<strong>UUID:</strong><span style="color:#B288B2;float: right;text-align: right;">'+ uuid+'</span><br/>'+'<strong>OS version:</strong><span style="color:#669999;float: right;text-align: right;">'+ version+'</span>');
+    $("#dp").html('<strong>Cordova version:</strong><br/>'+ cordova_version+'<br/>'+'<strong>Device Model:</strong><br/>'+ device_model+'<br/>'+'<strong>OS Name:</strong><br/>'+ platform+'<br/>'+'<strong>UUID:</strong><br/>'+ uuid+'<br/>'+'<strong>OS version:</strong><br/>'+ version);
     if (platform=="iOS") $("#ospic").attr("src","img/ios.png");
     else if (platform=="Android") $("#ospic").attr("src","img/android.png");
     else $("#ospic").remove();
@@ -90,14 +119,14 @@ function deviceCheck(){
   //Called to get Geolocation Info
   var geolocationSuccess=function(position){    
     $("#gp").text(" ");
-$("#gp").html('Latitude: '      + position.coords.latitude          + '<br/>' +
-          'Longitude: '         + position.coords.longitude         + '<br/>' +
-          'Altitude: '          + position.coords.altitude          + '<br/>' +
-          'Accuracy: '          + position.coords.accuracy          + '<br/>' +
-          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '<br/>' +
-          'Heading: '           + position.coords.heading           + '<br/>' +
-          'Speed: '             + position.coords.speed             + '<br/>' +
-          'Timestamp: '         + position.timestamp                + '<br/>');
+$("#gp").html('Latitude:<br/> '      + position.coords.latitude          + '<br/>' +
+          'Longitude:<br/>'         + position.coords.longitude         + '<br/>' +
+          'Altitude:<br/>'          + position.coords.altitude          + '<br/>' +
+          'Accuracy:<br/>'          + position.coords.accuracy          + '<br/>' +
+          'Altitude Accuracy:<br/>' + position.coords.altitudeAccuracy  + '<br/>' +
+          'Heading:<br/>'           + position.coords.heading           + '<br/>' +
+          'Speed:<br/>'             + position.coords.speed             + '<br/>' +
+          'Timestamp:<br/>'         + position.timestamp                + '<br/>');
   }
 
   //Called on Geolocation Error
@@ -127,6 +156,15 @@ function checkConnection() {
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'No network connection';
     $("#np").text('Connection type: ' + states[networkState]);
+    if (networkState=="Connection.NONE" || "Connection.UNKNOWN") $("#nwkpic").attr("src","img/none.png");
+    else if (networkState=="Connection.CELL_2G") $("#nwkpic").attr("src","img/2g.png");
+    else if (networkState=="Connection.CELL_3G") $("#nwkpic").attr("src","img/3g.png");
+    else if (networkState=="Connection.CELL_4G") $("#nwkpic").attr("src","img/4g.png");
+    else if (networkState=="Connection.WIFI")    $("#nwkpic").attr("src","img/wifi.png");
+    else if (networkState=="Connection.ETHERNET")    $("#nwkpic").attr("src","img/ethernet.png");
+    else $("#nwkpic").attr("src","img/none.png");
+
+    
 }
 
 
@@ -329,7 +367,13 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
       //Used to Prompt a Dialog to Enter new contact details and save 
       $("#scbtn").tap(saveContact);//Method to Save Contacts
       
-      $("#secbtn").tap(searchContact);//Method to Search Contacts        
+      $("#secbtn").tap(searchContact);//Method to Search Contacts  
+
+      $("#pickcontactbtn").tap(pickContact);//Method to Pick Contact  
+
+      $(document).on("tap","#contactlist li",function(){
+        alert($(this).attr("id"));
+      });   
 
                 /**DEVICE PLUGIN**/
 

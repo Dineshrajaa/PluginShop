@@ -107,7 +107,7 @@
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
@@ -119,16 +119,16 @@
         	<h1>Battery Plugin</h1>
         	</header>
         	<article data-role="content">
-          <p id="btp"></p>
+          <div class="creative"><p id="btp"></p></div>
           <center>
-          <img src="" width="200px" height="200px" id="batterypic"> 
+          <img src="img/search.png" width="200px" height="200px" id="batterypic"> 
           </center>      	
         	</article>
         	<footer data-role="footer" data-position="fixed" data-theme="c">
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" id="informer" class="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
@@ -146,7 +146,7 @@
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
@@ -169,7 +169,7 @@
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
@@ -189,7 +189,7 @@
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
@@ -205,14 +205,14 @@
             <center>              
               <a href="#createcontact-page" data-role="button" id="createcontactbtn" >Create Contact</a>
               <a href="#searchcontact-page" data-role="button" id="searchcontactbtn">Search Contact</a>
-              <!--<input type="button" id="findcontactbtn" value="Find Contact" /> -->                       
+              <input type="button" id="pickcontactbtn" value="Find Contact" />                        
             </center>
           </article>
           <footer data-role="footer" data-position="fixed" data-theme="c">
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
@@ -246,13 +246,21 @@
           </article>
         </section>
 
+                      <!--Picked Contact Results-->
+        <section id="pickedcontactdata-page" data-role="page">
+        <article data-role="content">
+          <div class="creative"><p id="pcp"></p></div>
+          <br/><br/>
+          <a href="#" data-role="button" data-rel="back" id="backbtn">Ok</a>
+        </article>
+        </section>
                         <!--Device Page-->
 		<section data-role="page" id="device">
           <header data-role="header" data-theme="c">
             <h1>Device Plugin</h1>
           </header>
           <article data-role="content">
-            <p id="dp"></p>
+            <div class="creative"><p id="dp"></p></div>
             <center>
             <img src="" width="200px" height="200px" id="ospic" />
             </center>
@@ -261,7 +269,7 @@
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
@@ -272,22 +280,21 @@
         	<h1>Geolocation Plugin</h1>
         	</header>
         	<article data-role="content">        		
-        			<p id="gp"></p>
-        			<!--<input type="button" id="curlocation" value="Current Position" />
-        			<input type="button" id="locationwatch" value="Watch Position" />
-        			<input type="button" id="cleargeo" value="Clear Position" /> -->       			 
+        			<div class="creative"><p id="gp"></p></div>        			       			 
         		
         	</article>
         	<footer data-role="footer" data-position="fixed" data-theme="c">
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" id="informer" class="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
         </section>
-<section data-role="page" id="inappbrowser">
+
+                  <!--InApp Browser Page-->
+      <section data-role="page" id="inappbrowser">
         	<header data-role="header" data-theme="c">
         		<h1>InAppBrowser Plugin</h1>
         	</header>
@@ -300,28 +307,28 @@
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
         </section>
-
+                    <!--Network Page-->
        <section data-role="page" id="network">
         	<header data-role="header" data-theme="c">
         		<h1>Network Plugin</h1>
         	</header>
-        	<article data-role="content">
-        		<!--<center>
-        			<input type="button" id="connectchkbtn" value="Check Your Network Info" />
-        			<input type="button" id="tkpicfileurlbtn" value="File URL" />        			
-        		</center>-->
-            <p id="np"></p>
+        	<article data-role="content">        		
+           <div class="creative"><p id="np"></p></div>
+           <br/><br/>
+           <center>
+           <img src="" id="nwkpic" width="200px" height="200px" />
+           </center>
         	</article>
         	<footer data-role="footer" data-position="fixed" data-theme="c">
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" id="informer" class="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
@@ -366,7 +373,7 @@
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
@@ -387,7 +394,7 @@
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
@@ -407,7 +414,7 @@
                 <div data-role="navbar" id="navigation">
                     <ul>
                         <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
-                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer">Info</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
                     </ul>
                 </div>
             </footer>
