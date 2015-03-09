@@ -73,21 +73,22 @@ function onContactSearchSuccess(contacts){
 //Method to Print the list of contacts  
   $("#contactlist").html(" ");
   var platform=device.platform;
-  var contactcontent,nums;
+  var contactcontent,nums,namer;
   for(var i=0;i<contacts.length;i++){
     //Creates a Contact list based on the results obtained
     if (contacts[i].phoneNumbers && contacts[i].phoneNumbers.length) nums=contacts[i].phoneNumbers[0].value;
     else nums="No Number Available";
-    if (platform=="iOS") {
+    namer=contacts[i].displayName || contacts[i].nickname || contacts[i].name.formatted;
+    //if (platform=="iOS") {
       //Works only on iOS
     //$("#contactlist").append("<li id='"+contacts[i].id+"'><a href='#'>"+contacts[i].nickname+"</a></li>");
-    contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+contacts[i].nickname+"</h3> <p>"+nums+"</p></div>";
-    }
+    contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+namer+"</h3> <p>"+nums+"</p></div>";
+   // }
     //Works on Android
     // $("#contactlist").append("<li id='"+contacts[i].id+"'><a href='#'>"+contacts[i].displayName+"</a></li>");
-    else {
-      contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+contacts[i].displayName+"</h3> <p>"+nums+"</p></div>";
-    }
+    //else {
+      //contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+contacts[i].displayName+"</h3> <p>"+nums+"</p></div>";
+    //}
     nums=" ";
     $( "#contactlist" ).append(contactcontent).collapsibleset( "refresh" );
   }

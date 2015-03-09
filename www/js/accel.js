@@ -139,7 +139,7 @@ function success(acceleration){
                     clear();
                     // Draw canvas background
                     canvas_ctx.fillStyle = CANVAS_COLOR;
-                    rect( 0, 0, WIDTH, HEIGHT );
+                    rect( 0, 0, WIDTH, HEIGHT+3 );
                     /* Draw circle */
                     canvas_ctx.fillStyle = CIRCLE_COLOR;
                     circle( x, y, RADIUS );
