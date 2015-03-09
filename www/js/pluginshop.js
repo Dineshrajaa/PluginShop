@@ -48,8 +48,10 @@ function searchContact(){
   var options      = new ContactFindOptions();//Creates options for finding contacts
   options.filter   =$("#sname").val();//Creates a filter from the input
   options.multiple = true;//Returns multiple matching results
-  options.desiredFields = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.nickname];//Desired Fields in which the Filter has to be matched
-  var fields       = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];//Fields in which the Filter has to be matched
+  
+  options.desiredFields = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];// , navigator.contacts.fieldType.nickname Desired Fields in which the Filter has to be matched
+  
+var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];//,navigator.contacts.fieldType.nickname Fields in which the Filter has to be matched
   navigator.contacts.find(fields, onContactSearchSuccess, onContactSearchError, options);//Find contacts
 }
 
@@ -64,7 +66,7 @@ function specificContactFetch(uid){
 }
 
 function onContactSelect(contacts){
-  alert(contacts[0].displayName);
+  alert(contacts.length);
 }
 
 function onContactSearchSuccess(contacts){
@@ -372,7 +374,7 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
       $("#pickcontactbtn").tap(pickContact);//Method to Pick Contact  
 
       $(document).on("tap","#contactlist li",function(){
-        alert($(this).attr("id"));
+        specificContactFetch($(this).attr("id"));
       });   
 
                 /**DEVICE PLUGIN**/
