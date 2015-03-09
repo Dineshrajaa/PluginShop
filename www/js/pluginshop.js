@@ -49,40 +49,49 @@ function searchContact(){
   options.filter   =$("#sname").val();//Creates a filter from the input
   options.multiple = true;//Returns multiple matching results
   
-  options.desiredFields = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];// , navigator.contacts.fieldType.nickname Desired Fields in which the Filter has to be matched
+  options.desiredFields = [navigator.contacts.fieldType.phoneNumbers,navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];// , navigator.contacts.fieldType.nickname Desired Fields in which the Filter has to be matched
   
-var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];//,navigator.contacts.fieldType.nickname Fields in which the Filter has to be matched
+var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.phoneNumbers];//,navigator.contacts.fieldType.nickname Fields in which the Filter has to be matched
   navigator.contacts.find(fields, onContactSearchSuccess, onContactSearchError, options);//Find contacts
 }
 
-function specificContactFetch(uid){
+/*function specificContactFetch(uid){
   //Method to Find the details of the specific contact
   var options      = new ContactFindOptions();//Creates options for finding contacts
   options.filter   =uid;//Creates a filter from the input
   options.multiple = false;//Returns multiple matching results
-  options.desiredFields = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.nickname];//Desired Fields in which the Filter has to be matched
-  var fields       = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];//Fields in which the Filter has to be matched
+  options.desiredFields = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.nickname,navigator.contacts.fieldType.phoneNumbers];//Desired Fields in which the Filter has to be matched
+  var fields       = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.phoneNumbers];//Fields in which the Filter has to be matched
   navigator.contacts.find(fields,onContactSelect,onContactSearchError);
 }
 
 function onContactSelect(contacts){
   alert(contacts.length);
-}
+}*/
 
 function onContactSearchSuccess(contacts){
 //Method to Print the list of contacts  
   $("#contactlist").html(" ");
   var platform=device.platform;
+  var contactcontent,nums;
   for(var i=0;i<contacts.length;i++){
     //Creates a Contact list based on the results obtained
+    if (contacts[i].phoneNumbers && contacts[i].phoneNumbers.length) nums=contacts[i].phoneNumbers[0].value;
+    else nums="No Number Available";
     if (platform=="iOS") {
       //Works only on iOS
-    $("#contactlist").append("<li id='"+contacts[i].id+"'><a href='#'>"+contacts[i].nickname+"</a></li>");
+    //$("#contactlist").append("<li id='"+contacts[i].id+"'><a href='#'>"+contacts[i].nickname+"</a></li>");
+    contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+contacts[i].nickname+"</h3> <p>"+nums+"</p></div>";
     }
     //Works on Android
-    else $("#contactlist").append("<li id='"+contacts[i].id+"'><a href='#'>"+contacts[i].displayName+"</a></li>");
+    // $("#contactlist").append("<li id='"+contacts[i].id+"'><a href='#'>"+contacts[i].displayName+"</a></li>");
+    else {
+      contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+contacts[i].displayName+"</h3> <p>"+nums+"</p></div>";
+    }
+    nums=" ";
+    $( "#contactlist" ).append(contactcontent).collapsibleset( "refresh" );
   }
-  $("#contactlist").listview("refresh");
+  //$("#contactlist").listview("refresh");
 }
 
 function onContactSearchError(contactError){
@@ -97,9 +106,13 @@ function pickContact(){
 function onContactPick(contact){
   //Callback Function for ContactPick
   var selectedcontactdata=JSON.stringify(contact);
-  var parsedcontact=JSON.parse(selectedcontactdata);  
-  $(":mobile-pagecontainer").pagecontainer("change","#pickedcontactdata-page");
-  $("#pcp").html("<strong>Name:</strong><br/>"+parsedcontact.displayName || parsedcontact.nickname+"<br/><strong>Number:</strong><br/>"+parsedcontact.phoneNumbers[0].value);
+  var parsedcontact=JSON.parse(selectedcontactdata); 
+  var names=parsedcontact.displayName || parsedcontact.nickname;
+  var nums; 
+  if (contact.phoneNumbers && contact.phoneNumbers.length) nums=contact.phoneNumbers[0].value;
+  else nums="No Number Available";
+  $(":mobile-pagecontainer").pagecontainer("change","#pickedcontactdata-page");  
+  $("#pcp").html("<strong>Name:</strong><br/>"+names+"<br/><strong>Number:</strong><br/>"+nums);
 
 }
 
