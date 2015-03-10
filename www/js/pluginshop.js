@@ -161,7 +161,8 @@ $("#gp").html('Latitude:<br/> '      + position.coords.latitude          + '<br/
       /**INTERNET-INFORMATION PLUGIN**/
 function checkConnection() {
     $("#np").text(" ");
-    networkState = navigator.connection.type;    
+    networkState = navigator.connection.type;
+    alert("Network State: "+networkState);    
     var states = {};
     states[Connection.UNKNOWN]  = 'Unknown connection';
     states[Connection.ETHERNET] = 'Ethernet connection';
@@ -172,13 +173,16 @@ function checkConnection() {
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'No network connection';
     $("#np").text('Connection type: ' + states[networkState]);
-    if (networkState=="Connection.NONE" || "Connection.UNKNOWN") $("#nwkpic").attr("src","img/none.png");
-    else if (networkState=="Connection.CELL_2G") $("#nwkpic").attr("src","img/2g.png");
-    else if (networkState=="Connection.CELL_3G") $("#nwkpic").attr("src","img/3g.png");
-    else if (networkState=="Connection.CELL_4G") $("#nwkpic").attr("src","img/4g.png");
-    else if (networkState=="Connection.WIFI")    $("#nwkpic").attr("src","img/wifi.png");
-    else if (networkState=="Connection.ETHERNET")    $("#nwkpic").attr("src","img/ethernet.png");
-    else $("#nwkpic").attr("src","img/none.png");
+    if(networkState=="none" || "unknown") $("#nwkpic").attr("src","img/none.png");
+    else if(networkState=="2g") $("#nwkpic").attr("src","img/2g.png");
+    else if(networkState=="3g") $("#nwkpic").attr("src","img/3g.png");
+    else if(networkState=="4g") $("#nwkpic").attr("src","img/4g.png");
+    else if(networkState=="wifi")    $("#nwkpic").attr("src","img/wifi.png");
+    else if(networkState=="ethernet")    $("#nwkpic").attr("src","img/ethernet.png");
+    else {
+      alert("Came to Else");
+      $("#nwkpic").attr("src","img/none.png")
+    };
 
     
 }
