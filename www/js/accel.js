@@ -145,8 +145,8 @@ function success(acceleration){
                     circle( x, y, RADIUS );
                 }
 
-    document.addEventListener('deviceready',function(){
+   // document.addEventListener('deviceready',function(){
     	showCanvas();
-    });
+   // });
 	//DOM Loaded Fully
 });
