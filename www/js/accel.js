@@ -139,14 +139,14 @@ function success(acceleration){
                     clear();
                     // Draw canvas background
                     canvas_ctx.fillStyle = CANVAS_COLOR;
-                    rect( 0, 0, WIDTH, HEIGHT+3 );
+                    rect( 0, 0, WIDTH, HEIGHT);
                     /* Draw circle */
                     canvas_ctx.fillStyle = CIRCLE_COLOR;
                     circle( x, y, RADIUS );
                 }
 
-   // document.addEventListener('deviceready',function(){
+   document.addEventListener('deviceready',function(){
     	showCanvas();
-   // });
+    });
 	//DOM Loaded Fully
 });

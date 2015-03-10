@@ -339,7 +339,7 @@ $(document).ready(function(){
           //var iW,iH,canvas,cnv,target,xPos,yPos
           document.addEventListener("deviceready",function(){
             //Device Ready
-            showCanvas();
+           // showCanvas();
             $(document).on("pageinit","#vibration",function() {
         //Makes the Map to appear properly                                
            if (device.platform=="iOS") $("#patternedvib").remove();                        
@@ -410,14 +410,13 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
                 /**DEVICE MOTION PLUGIN**/
 
       //Used for Accelerometer Current Device Position
-      //$("#accel").tap(function(){
-        //navigator.accelerometer.getCurrentAcceleration(accelerometerSuccess, accelerometerError);
+      /*$("#accel").tap(function(){        
         //accelBall();
-        //showCanvas();
-      //});
+        showCanvas();
+      });
 
       //Used for Accelerometer Device Movement tracking
-      /*$("#accelwatch").tap(function(){
+      $("#accelwatch").tap(function(){
         var accelId=navigator.accelerometer.watchAcceleration(onWatchAccelSuccess,accelerometerError,{frequency:1000});
       });*/
 
