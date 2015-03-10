@@ -409,11 +409,11 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
                 /**DEVICE MOTION PLUGIN**/
 
       //Used for Accelerometer Current Device Position
-      $("#accel").tap(function(){
+      //$("#accel").tap(function(){
         //navigator.accelerometer.getCurrentAcceleration(accelerometerSuccess, accelerometerError);
         //accelBall();
-        showCanvas();
-      });
+        //showCanvas();
+      //});
 
       //Used for Accelerometer Device Movement tracking
       /*$("#accelwatch").tap(function(){
