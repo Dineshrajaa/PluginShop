@@ -22,7 +22,7 @@ $(document).ready(function(){
     var CANVAS_COLOR = "#FAF7F8";   // Color of canvas background
     var watchID;                    // Accelerometer.watchAcceleration return value. 
     var drawID;                     // Draw time interval. 
-    var playing = true;             // Boolean if animation is playing.
+    var playing = true;             // Boolean if animation is playing. 
 
 	//alert("iW:"+iW+"iH:"+iH+"hH:"+hH+"fH:"+fH+"hW:"+hW+"fW:"+fW);
 	/*var canvas= document.getElementById('myCanvas');

@@ -162,7 +162,7 @@ $("#gp").html('Latitude:<br/> '      + position.coords.latitude          + '<br/
 function checkConnection() {
     $("#np").text(" ");
     networkState = navigator.connection.type;
-    //alert("Network State: "+networkState);    
+        
     var states = {};
     states[Connection.UNKNOWN]  = 'Unknown connection';
     states[Connection.ETHERNET] = 'Ethernet connection';
@@ -172,33 +172,26 @@ function checkConnection() {
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'No network connection';
-    $("#np").text('Connection type: ' + states[networkState]);
-    /*if(networkState=="none" || "unknown") $("#nwkpic").attr("src","img/none.png");
-    else if(networkState=="2g") $("#nwkpic").attr("src","img/2g.png");
-    else if(networkState=="3g") $("#nwkpic").attr("src","img/3g.png");
-    else if(networkState=="4g") $("#nwkpic").attr("src","img/4g.png");
-    else if(networkState=="wifi")    $("#nwkpic").attr("src","img/wifi.png");
-    else if(networkState=="ethernet")    $("#nwkpic").attr("src","img/ethernet.png");
-    else {
-      //alert("Came to Else");
-      $("#nwkpic").attr("src","img/none.png")
-    }; */
-    switch(networkState){
-      case 'none':
+    $("#np").text('Connection type: ' + states[networkState]);    
+    switch(navigator.connection.type){
+      case Connection.UNKNOWN:
         $("#nwkpic").attr("src","img/none.png");
         break;
-      case '2g':
+      case Connection.CELL_2G:
         $("#nwkpic").attr("src","img/2g.png");
         break;
-      case '3g'
+      case Connection.CELL_3G:
         $("#nwkpic").attr("src","img/3g.png");
         break;
-      case '4g':
+      case Connection.CELL_4G:
         $("#nwkpic").attr("src","img/4g.png");
         break;
-      case 'wifi':
+      case Connection.WIFI:
         $("#nwkpic").attr("src","img/wifi.png");
-        break;      
+        break;
+      default:
+         $("#nwkpic").attr("src","img/none.png");
+         break;     
     }
 
     
@@ -502,8 +495,7 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
       customAlert("PluginShop"+"\n"+"Version-0.0.1"+"\n"+"Developer-Dinesh Raja","About");
     });     
     
-    StatusBar.overlaysWebView(false);
-     
+    StatusBar.overlaysWebView(false);     
       });         
           },false);
         
