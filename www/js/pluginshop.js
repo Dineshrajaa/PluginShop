@@ -96,12 +96,47 @@ function onContactSearchSuccess(contacts){
 }
 
 function onContactSearchError(contactError){
-  alert('onError!');
+  alert(contactError);
 }
 
 function pickContact(){
   //Method to display Contact Picker
   navigator.contacts.pickContact(onContactPick,onContactSearchError);
+}
+
+function listAllContacts(){
+  //Method to search all the contacts  
+  var options      = new ContactFindOptions();
+  options.filter   =" ";
+  options.multiple = true;
+  options.desiredFields = [navigator.contacts.fieldType.phoneNumbers,navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];
+  var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.phoneNumbers];
+  navigator.contacts.find(fields, onContactListSuccess, onContactSearchError, options);
+
+}
+
+function onContactListSuccess(contacts){
+  $(":mobile-pagecontainer").pagecontainer("change","#listcontact-page");
+  $.mobile.loading("show", {
+        text: "Listing Contacts",
+        textVisible: true
+        });
+  setTimeout(function() {
+      $.mobile.loading("hide");
+}, 5000);
+  $("#fullcontactlist").html(" ");
+  var contactcontent,nums,namer;
+  for(var i=0;i<contacts.length;i++){
+    if (contacts[i].phoneNumbers && contacts[i].phoneNumbers.length) nums=contacts[i].phoneNumbers[0].value;
+    else nums="No Number Available";
+    namer=contacts[i].displayName || contacts[i].nickname || contacts[i].name.formatted;
+    contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+namer+"</h3> <p>"+nums+"</p></div>";
+    nums=" ";
+    $( "#fullcontactlist" ).append(contactcontent).collapsibleset( "refresh" );
+  }
+  
+  
+  
 }
 
 function onContactPick(contact){
@@ -133,16 +168,24 @@ function deviceCheck(){
 
       /**GEOLOCATION PLUGIN**/
   //Called to get Geolocation Info
-  var geolocationSuccess=function(position){    
+  var geolocationSuccess=function(position){
+  var lat=position.coords.latitude || 11.0347316;
+  var lon=position.coords.longitude || 76.9518059;
+  var alt=position.coords.altitude || 193.1;
+  var acc=position.coords.accuracy || 96;
+  var altacc=position.coords.altitudeAccuracy  || 12.38632639123;
+  var head=position.coords.heading || 306;
+  var speed=position.coords.speed || 0;
+  var ts=position.timestamp;
     $("#gp").text(" ");
-$("#gp").html('Latitude:<br/> '      + position.coords.latitude          + '<br/>' +
-          'Longitude:<br/>'         + position.coords.longitude         + '<br/>' +
-          'Altitude:<br/>'          + position.coords.altitude          + '<br/>' +
-          'Accuracy:<br/>'          + position.coords.accuracy          + '<br/>' +
-          'Altitude Accuracy:<br/>' + position.coords.altitudeAccuracy  + '<br/>' +
-          'Heading:<br/>'           + position.coords.heading           + '<br/>' +
-          'Speed:<br/>'             + position.coords.speed             + '<br/>' +
-          'Timestamp:<br/>'         + position.timestamp                + '<br/>');
+$("#gp").html('Latitude:<br/> '     + lat          + '<br/>' +
+          'Longitude:<br/>'         + lon          + '<br/>' +
+          'Altitude:<br/>'          + alt          + '<br/>' +
+          'Accuracy:<br/>'          + acc          + '<br/>' +
+          'Altitude Accuracy:<br/>' + altacc       + '<br/>' +
+          'Heading:<br/>'           + head         + '<br/>' +
+          'Speed:<br/>'             + speed        + '<br/>' +
+          'Timestamp:<br/>'         + ts           + '<br/>');
   }
 
   //Called on Geolocation Error
@@ -400,7 +443,9 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
       
       $("#secbtn").tap(searchContact);//Method to Search Contacts  
 
-      $("#pickcontactbtn").tap(pickContact);//Method to Pick Contact  
+      $("#pickcontactbtn").tap(pickContact);//Method to Pick Contact 
+
+      $("#listcontactbtn").tap(listAllContacts);//Method to List all the Contacts 
 
       $(document).on("tap","#contactlist li",function(){
         specificContactFetch($(this).attr("id"));

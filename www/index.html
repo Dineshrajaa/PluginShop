@@ -116,7 +116,7 @@
 
                               <!--Battery Page-->
        <section data-role="page" id="battery" >
-        	<header data-role="header" data-theme="c" >
+        	<header data-role="header" data-theme="c" data-position="fixed">
         	<h1>Battery Plugin</h1>
         	</header>
         	<article data-role="content">
@@ -137,7 +137,7 @@
 
                         <!--Accelerometer Page-->
         <section data-role="page" id="accelerometer-page">
-            <header data-role="header" data-theme="c">
+            <header data-role="header" data-theme="c" data-position="fixed">
             <h1>Accelerometer</h1>
             </header>
             <article data-role="main">              
@@ -155,7 +155,7 @@
 
                           <!--Camera Page-->
         <section data-role="page" id="camera" >
-        	<header data-role="header" data-theme="c">
+        	<header data-role="header" data-theme="c" data-position="fixed">
         		<h1>Camera Plugin</h1>
         	</header>
         	<article data-role="content">
@@ -178,7 +178,7 @@
 
                         <!--Compass Page-->
          <section data-role="page" id="compass-page" >
-          <header data-role="header" data-theme="c">
+          <header data-role="header" data-theme="c" data-position="fixed">
             <h1>Compass Plugin</h1>
           </header>
           <article data-role="content">
@@ -199,14 +199,15 @@
 
                         <!--Contacts Page-->
         <section data-role="page" id="contacts" >
-          <header data-role="header" data-theme="c">
+          <header data-role="header" data-theme="c" data-position="fixed">
             <h1>Contacts Plugin</h1>
           </header>
           <article data-role="content">
             <center>              
               <a href="#createcontact-page" data-role="button" id="createcontactbtn" >Create Contact</a>
               <a href="#searchcontact-page" data-role="button" id="searchcontactbtn">Search Contact</a>
-              <input type="button" id="pickcontactbtn" value="Find Contact" />                        
+              <input type="button" id="pickcontactbtn" value="Pick Contact" />
+              <input type="button" id="listcontactbtn" value="List Contact" />                        
             </center>
           </article>
           <footer data-role="footer" data-position="fixed" data-theme="c">
@@ -220,7 +221,7 @@
         </section>
                       <!--Add Contacts Page-->
         <section data-role="page" id="createcontact-page" >
-          <header data-role="header" data-theme="c">
+          <header data-role="header" data-theme="c" data-position="fixed">
             <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-role="button">Back</a>
             <h1>Add Contacts</h1>
           </header>
@@ -235,7 +236,7 @@
 
                       <!--Search Contact Page-->
         <section data-role="page" id="searchcontact-page" >
-          <header data-role="header" data-theme="c">
+          <header data-role="header" data-theme="c" data-position="fixed">
             <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-role="button">Back</a>
             <h1>Search Contacts</h1>
           </header>
@@ -256,9 +257,28 @@
           <a href="#" data-role="button" data-rel="back" id="backbtn">Ok</a>
         </article>
         </section>
+
+                      <!--Contact Listing Page-->
+        <section id="listcontact-page" data-role="page">
+          <header data-role="header" data-theme="c" data-position="fixed">
+            <h1>List Contacts</h1>
+          </header>
+          <article data-role="content">
+            <div id="fullcontactlist" data-role="collapsibleset" data-content-theme="a" data-iconpos="right"></div>
+          </article>
+          <footer data-role="footer" data-position="fixed" data-theme="c">
+                <div data-role="navbar" id="navigation">
+                    <ul>
+                        <li><a href="#landingpage" data-icon="home" data-iconpos="top" id="homenav">Home</a></li>
+                        <li><a href="#" data-icon="info" data-iconpos="top" class="informer" id="informer">Info</a></li>
+                    </ul>
+                </div>
+            </footer>
+        </section>
+
                         <!--Device Page-->
-		<section data-role="page" id="device">
-          <header data-role="header" data-theme="c">
+		    <section data-role="page" id="device">
+          <header data-role="header" data-theme="c" data-position="fixed">
             <h1>Device Plugin</h1>
           </header>
           <article data-role="content">
@@ -278,7 +298,7 @@
         </section>
 
       <section data-role="page" id="geolocation" >
-        	<header data-role="header" data-theme="c" >
+        	<header data-role="header" data-theme="c" data-position="fixed">
         	<h1>Geolocation Plugin</h1>
         	</header>
         	<article data-role="content">        		
@@ -297,12 +317,12 @@
 
                   <!--InApp Browser Page-->
       <section data-role="page" id="inappbrowser">
-        	<header data-role="header" data-theme="c">
+        	<header data-role="header" data-theme="c" data-position="fixed">
         		<h1>InAppBrowser Plugin</h1>
         	</header>
         	<article data-role="content">
         		<center>
-        			<input type="button" id="inappbtn" value="Add Me" />       			       	
+        			<input type="button" id="inappbtn" value="View Inappbrowser" />       			       	
         		</center>
         	</article>
         	<footer data-role="footer" data-position="fixed" data-theme="c">
@@ -316,7 +336,7 @@
         </section>
                     <!--Network Page-->
        <section data-role="page" id="network">
-        	<header data-role="header" data-theme="c">
+        	<header data-role="header" data-theme="c" data-position="fixed">
         		<h1>Network Plugin</h1>
         	</header>
         	<article data-role="content">        		
@@ -360,7 +380,7 @@
 
                       <!--Dialogs page-->
         <section data-role="page" id="dialogs">
-          <header data-role="header" data-theme="c" >
+          <header data-role="header" data-theme="c" data-position="fixed">
           <h1>Dialogs Plugin</h1>
           </header>
           <article data-role="content">
@@ -383,7 +403,7 @@
 
                       <!--Vibration Page-->
         <section data-role="page" id="vibration">
-          <header data-role="header" data-theme="c" >
+          <header data-role="header" data-theme="c" data-position="fixed">
           <h1>Vibration Plugin</h1>
           </header>
           <article data-role="content">
@@ -404,7 +424,7 @@
 
                       <!--Splashscreen Page-->
         <section data-role="page" id="splashscreen">
-        	<header data-role="header" data-theme="c" >
+        	<header data-role="header" data-theme="c" data-position="fixed">
         	<h1>Splash Screen Plugin</h1>
         	</header>
         	<article data-role="content">
