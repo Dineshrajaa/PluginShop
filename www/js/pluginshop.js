@@ -105,7 +105,8 @@ function pickContact(){
 }
 
 function listAllContacts(){
-  //Method to search all the contacts  
+  //Method to search all the contacts 
+  $(":mobile-pagecontainer").pagecontainer("change","#listcontact-page"); 
   var options      = new ContactFindOptions();
   options.filter   =" ";
   options.multiple = true;
@@ -116,14 +117,8 @@ function listAllContacts(){
 }
 
 function onContactListSuccess(contacts){
-  $(":mobile-pagecontainer").pagecontainer("change","#listcontact-page");
-  $.mobile.loading("show", {
-        text: "Listing Contacts",
-        textVisible: true
-        });
-  setTimeout(function() {
-      $.mobile.loading("hide");
-}, 5000);
+  
+ //Method to append ContactList 
   $("#fullcontactlist").html(" ");
   var contactcontent,nums,namer;
   for(var i=0;i<contacts.length;i++){
