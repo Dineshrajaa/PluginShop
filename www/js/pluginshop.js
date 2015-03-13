@@ -129,14 +129,16 @@ function onContactListSuccess(contacts){
     
  setTimeout(function(){$.mobile.loading("hide")},5000);
   
-  var contactcontent,nums,namer;
+  var contactcontent;
+  var nums,namer;
   for(var i=0;i<contacts.length;i++){
     if (contacts[i].phoneNumbers && contacts[i].phoneNumbers.length) nums=contacts[i].phoneNumbers[0].value;
     else nums="No Number Available";
     namer=contacts[i].displayName || contacts[i].nickname || contacts[i].name.formatted;
-    contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+namer+"</h3> <p>"+nums+"</p></div>";
-    nums=" ";
-    $( "#fullcontactlist" ).append(contactcontent).collapsibleset( "refresh" );
+    //contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+namer+"</h3> <p>"+nums+"</p></div>";
+    contactcontent="<li><a href='#'><h3>"+namer+"</h3><p>"+nums+"</p></a></li>";
+    nums=" "; 
+    $( "#fullcontactlist" ).append(contactcontent).listview( "refresh" );   
   }
   
 }
