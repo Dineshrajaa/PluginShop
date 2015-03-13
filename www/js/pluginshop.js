@@ -106,7 +106,12 @@ function pickContact(){
 
 function listAllContacts(){
   //Method to search all the contacts 
-   
+  $(":mobile-pagecontainer").pagecontainer("change","#listcontact-page");
+  $.mobile.loading( "show", {
+text: "Loading Contacts",
+textVisible: true,
+theme: "b"
+});
   var options      = new ContactFindOptions();
   options.filter   ="";
   options.multiple = true;
@@ -120,6 +125,10 @@ function onContactListSuccess(contacts){
   
  //Method to append ContactList 
   $("#fullcontactlist").html(" ");
+  
+    
+ setTimeout(function(){$.mobile.loading("hide")},5000);
+  
   var contactcontent,nums,namer;
   for(var i=0;i<contacts.length;i++){
     if (contacts[i].phoneNumbers && contacts[i].phoneNumbers.length) nums=contacts[i].phoneNumbers[0].value;
@@ -129,7 +138,6 @@ function onContactListSuccess(contacts){
     nums=" ";
     $( "#fullcontactlist" ).append(contactcontent).collapsibleset( "refresh" );
   }
-  $(":mobile-pagecontainer").pagecontainer("change","#listcontact-page"); 
   
 }
 
