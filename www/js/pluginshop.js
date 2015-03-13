@@ -106,9 +106,9 @@ function pickContact(){
 
 function listAllContacts(){
   //Method to search all the contacts 
-  $(":mobile-pagecontainer").pagecontainer("change","#listcontact-page"); 
+   
   var options      = new ContactFindOptions();
-  options.filter   =" ";
+  options.filter   ="";
   options.multiple = true;
   options.desiredFields = [navigator.contacts.fieldType.phoneNumbers,navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];
   var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.phoneNumbers];
@@ -129,8 +129,7 @@ function onContactListSuccess(contacts){
     nums=" ";
     $( "#fullcontactlist" ).append(contactcontent).collapsibleset( "refresh" );
   }
-  
-  
+  $(":mobile-pagecontainer").pagecontainer("change","#listcontact-page"); 
   
 }
 
@@ -395,7 +394,7 @@ $(document).ready(function(){
             
 
             /**Network Check**/
-            if (navigator.connection.type=="none") alert("Please Connect to Internet for best perfomance");
+            if (navigator.connection.type=="none") customAlert("Please Connect to Internet for best perfomance","Network Request");
 
 
                   /**BATTERY PLUGIN**/
