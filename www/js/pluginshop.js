@@ -124,7 +124,8 @@ theme: "b"
 function onContactListSuccess(contacts){
   
  //Method to append ContactList 
-  $("#fullcontactlist").html(" ");   
+  $("#fullcontactlist").html(" "); 
+  setTimeout(function(){$.mobile.loading("hide")},5000);  
   var contactcontent;
   var nums,namer;
   for(var i=0;i<contacts.length;i++){
@@ -136,7 +137,7 @@ function onContactListSuccess(contacts){
     nums=" "; 
     $( "#fullcontactlist" ).append(contactcontent).listview( "refresh" );   
   }
-  setTimeout(function(){$.mobile.loading("hide")},5000);
+
   
 }
 
