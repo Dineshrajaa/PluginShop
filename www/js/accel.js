@@ -3,7 +3,7 @@ $(document).ready(function(){
 	var iH=window.innerHeight;//stores device height
 	var hH=$('header').outerHeight() || 0;//stores header height if exists
 	var fH=$('footer').outerHeight() || 0;//stores footer height if exists
-	var canvas_ctx;variable to store canvas context
+	var canvas_ctx;//variable to store canvas context
 	var x; // Circle x position
     var y; // Circle Y position
     var ax = 0;//Acceleration X axis

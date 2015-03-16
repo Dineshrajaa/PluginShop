@@ -298,7 +298,8 @@ function beepAlerter(){
 
 $(document).ready(function(){
     //DOM Fully Loaded
-          //Global Declarations    
+          //Global Declarations
+         
           var watch,networkState;          
           document.addEventListener("deviceready",function(){
                       //Device Ready
