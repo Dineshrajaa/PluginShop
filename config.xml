@@ -67,19 +67,7 @@
 
     <!--SPLASH SCREEN FOR ALL-->
     <gap:splash src="splash.png" />
-    <!--SPLASH SCREEN FOR ios-->
-    <!-- iPhone and iPod touch 
-    <gap:splash src="res/screen/ios/Default.png" gap:platform="ios" width="320" height="480" />
-    <gap:splash src="res/screen/ios/Default@2x.png" gap:platform="ios" width="640" height="960" />
     
-    <gap:splash src="res/screen/ios/Default-568h@2x.png" gap:platform="ios" width="640" height="1136" />
-    SPLASH SCREEN FOR Android
-    <gap:splash src="res/screen/android/ldpi.png" gap:platform="android" gap:qualifier="ldpi" />
-    <gap:splash src="res/screen/android/mdpi.png" gap:platform="android" gap:qualifier="mdpi" />
-    <gap:splash src="res/screen/android/hdpi.png" gap:platform="android" gap:qualifier="hdpi" />
-    <gap:splash src="res/screen/android/xhdpi.png" gap:platform="android" gap:qualifier="xhdpi" />    
-    <gap:splash src="res/screen/android/portrait-xxhdpi.png" gap:platform="android" gap:qualifier="port-xxhdpi" />
-    <gap:splash src="res/screen/android/landscape-xxhdpi.png" gap:platform="android" gap:qualifier="land-xxhdpi" />-->
 
     <!--Splash-->
 

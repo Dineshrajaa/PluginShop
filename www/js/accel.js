@@ -1,11 +1,9 @@
 $(document).ready(function(){
-	var iW=window.innerWidth;
-	var iH=window.innerHeight;
-	var hH=$('header').outerHeight() || 0;
-	var fH=$('footer').outerHeight() || 0;
-	//var hW=$('header').outerWidth() || 0;
-	//var fW=$('footer').outerWidth() || 0;
-	var canvas_ctx;
+	var iW=window.innerWidth;//stores device width
+	var iH=window.innerHeight;//stores device height
+	var hH=$('header').outerHeight() || 0;//stores header height if exists
+	var fH=$('footer').outerHeight() || 0;//stores footer height if exists
+	var canvas_ctx;variable to store canvas context
 	var x; // Circle x position
     var y; // Circle Y position
     var ax = 0;//Acceleration X axis
@@ -14,28 +12,19 @@ $(document).ready(function(){
     var vy = 0;// Velocity y axis    
     var DISTANCE_FACTOR = .1;
     var drawID;// Draw time interval.
-    var SPEED = 25;
-    var WIDTH = iW;                // Width of canvas
-    var HEIGHT = iH-hH-fH;               // -(hH+fH)Height of canvas
+    var SPEED = 25;//Speed of the accelerometer
+    var WIDTH = iW;// Width of canvas
+    var HEIGHT = iH-hH-fH;          // Height of canvas
     var RADIUS = 10;                // Width of circle object
     var CIRCLE_COLOR = "#f00";      // Circle color
     var CANVAS_COLOR = "#FAF7F8";   // Color of canvas background
     var watchID;                    // Accelerometer.watchAcceleration return value. 
     var drawID;                     // Draw time interval. 
     var playing = true;             // Boolean if animation is playing. 
-
-	//alert("iW:"+iW+"iH:"+iH+"hH:"+hH+"fH:"+fH+"hW:"+hW+"fW:"+fW);
-	/*var canvas= document.getElementById('myCanvas');
-    var cnv = canvas.getContext("2d");
-    cnv.canvas.width=iW;
-    cnv.canvas.height = iH-(hH+fH);
-    cnv.beginPath();
-    cnv.arc(75, 75, 10, 0, Math.PI*2, true);
-    cnv.closePath();
-    cnv.fillStyle="red";
-    cnv.fill(); */
+	
 
     function showCanvas(){
+        //Method to draw canvas
     	var canvas = document.getElementById("canvas");
         canvas.height=HEIGHT;
         canvas.width=WIDTH;

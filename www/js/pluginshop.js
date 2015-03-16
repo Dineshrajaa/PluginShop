@@ -8,18 +8,21 @@ function toastAlert(msg){
 }
 
 function customAlert(msg,title){
+  //This is a common template for generating native looking alerts
   navigator.notification.alert(msg,false,title);
 }
       /**BATTERY PLUGIN**/
 function onBatteryStatus(info) {
     //Callback method of Battery Status plugin
     if (info.isPlugged==true) {
-    $("#btp").html(" Phone is Charging and you have <strong>"+ info.level +" % charge</strong>");//Works if Charging
-    $("#batterypic").attr("src","img/plugged.png");
+      //Works if device is on charge
+    $("#btp").html(" Phone is Charging and you have <strong>"+ info.level +" % charge</strong>");//Prints the battery status in a div
+    $("#batterypic").attr("src","img/plugged.png");//shows charging picture
   }
     else {
-    $("#btp").html(" Phone is on Battery and you have <strong>"+ info.level +" % charge</strong>");//Works on Battery
-    $("#batterypic").attr("src","img/unplugged.png");
+      //works when device is on battery
+    $("#btp").html(" Phone is on Battery and you have <strong>"+ info.level +" % charge</strong>");//Prints the battery status in a div
+    $("#batterypic").attr("src","img/unplugged.png");//shows on battery picture
   }
     
 }
@@ -27,7 +30,7 @@ function onBatteryStatus(info) {
       /**CONTACTS PLUGIN**/
 
 function saveContact(){
-  //Method to Save Contact in Phone
+  //Method to Save Contact in device contacts database
   var phoneNumbers = [];
   var newcontact=navigator.contacts.create();//Creates a new Contact object
   phoneNumbers[0]=new ContactField('mobile', $("#cnum").val(), true);//Creates a new Mobile number
@@ -37,10 +40,12 @@ function saveContact(){
   newcontact.save(onContactSaveSuccess,onContactSaveFail);//Saves the Contact
 }
 function onContactSaveSuccess(){
+  //Success Callback function of saveContact method
   toastAlert("Saved Contact Successfully");
 }
 function onContactSaveFail(){
-  toastAlert("Unable to Save Contact");
+  //Failure Callback function of saveContact method
+  customAlert("Unable to Save Contact","Contact Error");
 }
 
 function searchContact(){
@@ -49,100 +54,43 @@ function searchContact(){
   options.filter   =$("#sname").val();//Creates a filter from the input
   options.multiple = true;//Returns multiple matching results
   
-  options.desiredFields = [navigator.contacts.fieldType.phoneNumbers,navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];// , navigator.contacts.fieldType.nickname Desired Fields in which the Filter has to be matched
+  options.desiredFields = [navigator.contacts.fieldType.phoneNumbers,navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];//Fields that has to be in results
   
-var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.phoneNumbers];//,navigator.contacts.fieldType.nickname Fields in which the Filter has to be matched
+var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.phoneNumbers];//Fields in which the Filter has to be matched
   navigator.contacts.find(fields, onContactSearchSuccess, onContactSearchError, options);//Find contacts
 }
 
-/*function specificContactFetch(uid){
-  //Method to Find the details of the specific contact
-  var options      = new ContactFindOptions();//Creates options for finding contacts
-  options.filter   =uid;//Creates a filter from the input
-  options.multiple = false;//Returns multiple matching results
-  options.desiredFields = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.nickname,navigator.contacts.fieldType.phoneNumbers];//Desired Fields in which the Filter has to be matched
-  var fields       = [navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.phoneNumbers];//Fields in which the Filter has to be matched
-  navigator.contacts.find(fields,onContactSelect,onContactSearchError);
-}
 
-function onContactSelect(contacts){
-  alert(contacts.length);
-}*/
 
 function onContactSearchSuccess(contacts){
-//Method to Print the list of contacts  
-  $("#contactlist").html(" ");
-  var platform=device.platform;
+//Success Callback function of searchContact method  
+  $("#contactlist").html(" ");//Removes all the results from the list  
   var contactcontent,nums,namer;
   for(var i=0;i<contacts.length;i++){
     //Creates a Contact list based on the results obtained
-    if (contacts[i].phoneNumbers && contacts[i].phoneNumbers.length) nums=contacts[i].phoneNumbers[0].value;
-    else nums="No Number Available";
-    namer=contacts[i].displayName || contacts[i].nickname || contacts[i].name.formatted;
-    //if (platform=="iOS") {
-      //Works only on iOS
-    //$("#contactlist").append("<li id='"+contacts[i].id+"'><a href='#'>"+contacts[i].nickname+"</a></li>");
+    if (contacts[i].phoneNumbers && contacts[i].phoneNumbers.length) nums=contacts[i].phoneNumbers[0].value;//If the contact have phonenumber the preffered contact will be stored
+    else nums="No Number Available";//If no number available for the contact
+    namer=contacts[i].displayName || contacts[i].nickname || contacts[i].name.formatted; //Based on the platform the name will be assigned   
     contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+namer+"</h3> <p>"+nums+"</p></div>";
-   // }
-    //Works on Android
-    // $("#contactlist").append("<li id='"+contacts[i].id+"'><a href='#'>"+contacts[i].displayName+"</a></li>");
-    //else {
-      //contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+contacts[i].displayName+"</h3> <p>"+nums+"</p></div>";
-    //}
+   //Creates data for collapsible
     nums=" ";
-    $( "#contactlist" ).append(contactcontent).collapsibleset( "refresh" );
+    $( "#contactlist" ).append(contactcontent).collapsibleset( "refresh" );//Creates the collapsible
   }
   //$("#contactlist").listview("refresh");
 }
 
 function onContactSearchError(contactError){
-  alert(contactError);
+  //Failure Callback function of searchContact method
+  customAlert("Unable to Search Contact","Contact Error");
 }
 
 function pickContact(){
   //Method to display Contact Picker
-  navigator.contacts.pickContact(onContactPick,onContactSearchError);
-}
-
-function listAllContacts(){
-  //Method to search all the contacts 
-  $(":mobile-pagecontainer").pagecontainer("change","#listcontact-page");
-  $.mobile.loading( "show", {
-text: "Loading Contacts",
-textVisible: true,
-theme: "b"
-});
-  var options      = new ContactFindOptions();
-  options.filter   ="";
-  options.multiple = true;
-  options.desiredFields = [navigator.contacts.fieldType.phoneNumbers,navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];
-  var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.phoneNumbers];
-  navigator.contacts.find(fields, onContactListSuccess, onContactSearchError, options);
-
-}
-
-function onContactListSuccess(contacts){
-  
- //Method to append ContactList 
-  $("#fullcontactlist").html(" "); 
-  setTimeout(function(){$.mobile.loading("hide")},5000);  
-  var contactcontent;
-  var nums,namer;
-  for(var i=0;i<contacts.length;i++){
-    if (contacts[i].phoneNumbers && contacts[i].phoneNumbers.length) nums=contacts[i].phoneNumbers[0].value;
-    else nums="No Number Available";
-    namer=contacts[i].displayName || contacts[i].nickname || contacts[i].name.formatted;
-    //contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+namer+"</h3> <p>"+nums+"</p></div>";
-    contactcontent="<li><a href='#'><h3>"+namer+"</h3><p>"+nums+"</p></a></li>";
-    nums=" "; 
-    $( "#fullcontactlist" ).append(contactcontent).listview( "refresh" );   
-  }
-
-  
+  navigator.contacts.pickContact(onContactPick,onContactSearchError);//Opens the native contact picker of the device
 }
 
 function onContactPick(contact){
-  //Callback Function for ContactPick
+  //Callback Function for pickContact method
   var selectedcontactdata=JSON.stringify(contact);
   var parsedcontact=JSON.parse(selectedcontactdata); 
   var names=parsedcontact.displayName || parsedcontact.nickname;
@@ -154,22 +102,61 @@ function onContactPick(contact){
 
 }
 
+function listAllContacts(){
+  //Method to search all the contacts 
+  $(":mobile-pagecontainer").pagecontainer("change","#listcontact-page");//Change to contact listing page
+  $.mobile.loading( "show", {
+text: "Loading Contacts",
+textVisible: true,
+theme: "b"
+});//Displays Loading while the contacts are being appended
+  var options      = new ContactFindOptions();
+  options.filter   ="";//To return all the contacts no filter is specified
+  options.multiple = true;
+  options.desiredFields = [navigator.contacts.fieldType.phoneNumbers,navigator.contacts.fieldType.id,navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.nickname];//Results needed to be returned
+  var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name,navigator.contacts.fieldType.phoneNumbers];//Fields on which pattern has to be matched
+  navigator.contacts.find(fields, onContactListSuccess, onContactSearchError, options);
+
+}
+
+function onContactListSuccess(contacts){
+  
+ //Method to append all the contacts to the ContactList 
+  $("#fullcontactlist").html(" ");//Clears the previous results to avoid redundant data 
+  setTimeout(function(){$.mobile.loading("hide")},5000);//Set timeout to hide the loader  
+  var contactcontent;
+  var nums,namer;
+  for(var i=0;i<contacts.length;i++){
+    if (contacts[i].phoneNumbers && contacts[i].phoneNumbers.length) nums=contacts[i].phoneNumbers[0].value;//If the contact have a number it will be added
+    else nums="No Number Available";
+    namer=contacts[i].displayName || contacts[i].nickname || contacts[i].name.formatted;
+    //contactcontent="<div data-role='collapsible' id='"+i+"'><h3>"+namer+"</h3> <p>"+nums+"</p></div>";
+    contactcontent="<li><a href='#'><h3>"+namer+"</h3><p>"+nums+"</p></a></li>";
+    nums=" "; 
+    $( "#fullcontactlist" ).append(contactcontent).listview( "refresh" );//Creates the listview with the data gathered   
+  }
+
+  
+}
+
+
+
       /**DEVICE PLUGIN**/
 function deviceCheck(){
     //$("#dp").text("");
-    var cordova_version=device.cordova;
-    var device_model=device.model;
-    var platform=device.platform;
-    var uuid=device.uuid;
-    var version=device.version;    
-    $("#dp").html('<strong>Cordova version:</strong><br/>'+ cordova_version+'<br/>'+'<strong>Device Model:</strong><br/>'+ device_model+'<br/>'+'<strong>OS Name:</strong><br/>'+ platform+'<br/>'+'<strong>UUID:</strong><br/>'+ uuid+'<br/>'+'<strong>OS version:</strong><br/>'+ version);
-    if (platform=="iOS") $("#ospic").attr("src","img/ios.png");
-    else if (platform=="Android") $("#ospic").attr("src","img/android.png");
-    else $("#ospic").remove();
+    var cordova_version=device.cordova;//stores cordova webview version
+    var device_model=device.model;//stores the device model
+    var platform=device.platform;//stores the platform running on the device
+    var uuid=device.uuid;//stores the uuid of the device
+    var version=device.version;//stores the os version of the device   
+    $("#dp").html('<strong>Cordova version:</strong><br/>'+ cordova_version+'<br/>'+'<strong>Device Model:</strong><br/>'+ device_model+'<br/>'+'<strong>OS Name:</strong><br/>'+ platform+'<br/>'+'<strong>UUID:</strong><br/>'+ uuid+'<br/>'+'<strong>OS version:</strong><br/>'+ version);//Prints the data in a div
+    if (platform=="iOS") $("#ospic").attr("src","img/ios.png");//shows ios logo if the platform is iOS
+    else if (platform=="Android") $("#ospic").attr("src","img/android.png");//shows android logo if the platform is Android
+    else $("#ospic").remove();//Removes the picture frame if its neither Android nor iOS
 }
 
       /**GEOLOCATION PLUGIN**/
-  //Called to get Geolocation Info
+  //Success Callback function of Geolocation plugin
   var geolocationSuccess=function(position){
   var lat=position.coords.latitude || 11.0347316;
   var lon=position.coords.longitude || 76.9518059;
@@ -179,7 +166,7 @@ function deviceCheck(){
   var head=position.coords.heading || 306;
   var speed=position.coords.speed || 0;
   var ts=position.timestamp;
-    $("#gp").text(" ");
+    $("#gp").text(" ");//clears the old data
 $("#gp").html('Latitude:<br/> '     + lat          + '<br/>' +
           'Longitude:<br/>'         + lon          + '<br/>' +
           'Altitude:<br/>'          + alt          + '<br/>' +
@@ -190,23 +177,18 @@ $("#gp").html('Latitude:<br/> '     + lat          + '<br/>' +
           'Timestamp:<br/>'         + ts           + '<br/>');
   }
 
-  //Called on Geolocation Error
-  function geolocationError(error){    
+  
+  function geolocationError(error){
+  //Failure Callback function of Geolocation plugin    
   customAlert("Please Turn on GPS","Geolocation Alert");
   }
 
-  //Called to Print Geolocation Value in a Paragraph
-  function onGeolocationSuccess(position){
-    var geopara=document.getElementById('georeading');
-    geopara.innerHTML='Latitude: '  + position.coords.latitude      + '<br/>' +
-                        'Longitude: ' + position.coords.longitude     + '<br/>' +
-                        '<hr />'      + geopara.innerHTML;
-  }
-
+  
       /**INTERNET-INFORMATION PLUGIN**/
 function checkConnection() {
-    $("#np").text(" ");
-    networkState = navigator.connection.type;
+  //Method to Check the network information of the device
+    $("#np").text(" ");//Clears the old data
+    networkState = navigator.connection.type;//checks the networkstate
         
     var states = {};
     states[Connection.UNKNOWN]  = 'Unknown connection';
@@ -217,25 +199,27 @@ function checkConnection() {
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'No network connection';
-    $("#np").text('Connection type: ' + states[networkState]);    
+    $("#np").text('Connection type: ' + states[networkState]);
+
     switch(navigator.connection.type){
+      //Switch loop to show the picture based on the network type
       case Connection.UNKNOWN:
-        $("#nwkpic").attr("src","img/none.png");
+        $("#nwkpic").attr("src","img/none.png");//Unknown internet
         break;
       case Connection.CELL_2G:
-        $("#nwkpic").attr("src","img/2g.png");
+        $("#nwkpic").attr("src","img/2g.png");//2G internet
         break;
       case Connection.CELL_3G:
-        $("#nwkpic").attr("src","img/3g.png");
+        $("#nwkpic").attr("src","img/3g.png");//3G internet
         break;
       case Connection.CELL_4G:
-        $("#nwkpic").attr("src","img/4g.png");
+        $("#nwkpic").attr("src","img/4g.png");//4G internet
         break;
       case Connection.WIFI:
-        $("#nwkpic").attr("src","img/wifi.png");
+        $("#nwkpic").attr("src","img/wifi.png");//WiFi internet
         break;
       default:
-         $("#nwkpic").attr("src","img/none.png");
+         $("#nwkpic").attr("src","img/none.png");//No internet
          break;     
     }
 
@@ -243,119 +227,68 @@ function checkConnection() {
 }
 
 
-      /**ACCELEROMETER PLUGIN**/
-/*function accelerometerSuccess(acceleration) {
-    toastAlert(
-          'Acceleration X: ' + acceleration.x + '\n' +
-          'Acceleration Y: ' + acceleration.y + '\n' +
-          'Acceleration Z: ' + acceleration.z + '\n' +
-          'Timestamp: '      + acceleration.timestamp + '\n');
-}
-//Not Working
-function onWatchAccelSuccess(acceleration){
-  //toastAlert("I am working");
-var acceleratoReading=document.getElementById("accelreading");
-      acceleratoReading.innerHTML= 'Acceleration X: ' + acceleration.x + '\n' +
-          'Acceleration Y: ' + acceleration.y + '\n' +
-          'Acceleration Z: ' + acceleration.z + '\n' +
-          'Timestamp: '      + acceleration.timestamp + '\n';
-}
-
-function accelerometerError() {
-    toastAlert('onError!');
-}; 
-function accelBall(){  
-  //Method to move the ball on screen based on the Device motion
-    iW = window.innerWidth-5;//Measures screen width     
-    iH = window.innerHeight-88;//Measures screen Height     
-    canvas= document.getElementById('myCanvas');//Selects the canvas which is present in the html page
-    cnv = canvas.getContext("2d");
-    cnv.canvas.width = iW;
-    cnv.canvas.height = iH;
-    target=new Image();//Creates a new Image object
-    target.src = "Bomb.png";//Sets source for Image object
-    xPos = (iW-target.width)/2;
-    yPos = (iH-target.height)/2;    
-    target.onload = function()
-      {
-          cnv.drawImage(target, xPos, yPos);//Renders Image on screen
-      }
-   watch = navigator.accelerometer.watchAcceleration(success, 
-          failure, {frequency: 100});//Watches accelerometer readings
-}
-function success(accel){
-  cnv.clearRect(0, 0, canvas.width, canvas.height);//clears the canvas
-    xPos += -1*(accel.x * 1.5);
-    yPos += (accel.y * 1.5);    
-    if (xPos>iW||yPos>iH) {
-      //If the Ball crosses the Device height it gets cleared 
-      cnv.clearRect(0, 0, canvas.width, canvas.height);
-      accelBall();
-    }
-    else cnv.drawImage(target, xPos, yPos);
-    
-  }
-  function failure()
-            {
-                toastAlert("Error");
-            }
-*/
+      
       /**CAMERA PLUGIN**/
-//Used to save the Picture took in Camera in base64 format
 function onDataCameraSuccess(imageData){
-    var pic=document.getElementById("picbox");
-    pic.src = "data:image/jpeg;base64," + imageData;
+  //Success Callback function of dataCamera method    
+    $("#picbox").attr("src","data:image/jpeg;base64,"+imageData);//Used to display the Picture took in Camera as DataURL
 }
 
-//Used to save the Picture took in Camera as FileURL
+
 function onFileCameraSuccess(imageURI){
-    var pic=document.getElementById("picbox");
-    pic.src = imageURI;    
+  //Success Callback function of fileCamera method      
+      $("#picbox").attr("src",imageURI);//Used to display the Picture took in Camera as FileURL
     toastAlert("Picture saved in " +imageURI);    
 }
 
 
 function onCameraFail(message){
-  toastAlert(message);
+  //Failure Callback function of Camera methods
+  customAlert(message,"Camera Error");//shows a customAlert
 }
 
-      /**DIALOGS PLUGIN**/
+                        /**DIALOGS PLUGIN**/
 
-          /*Alert Box Methods*/
-//Used to Open an Alertbox
+          /*Alert Box Methods*/ 
 function dialogAlerter(){
+  //Method to Open a Alertbox
 navigator.notification.alert("This is an Alert box created using Notification Plugin",alertExit,"Alert Dialog","Understood");
 }
 
-//Called when alertbox closed
+
 function alertExit(){
+  //Success Callback function of dialogAlerter method
   toastAlert("You have closed an Alert box");
 }
           /*Confirm Box Methods*/
-//Used to Open Confirmbox
 function confirmAlerter(){
+  //Method to open a confirm dialog
   navigator.notification.confirm("This is an Confirmbox",confirmExit,"Confirm Dialog",['Ok','Cancel']);
 }
 
 //Called when Confirmbox closed
 function confirmExit(buttonIndex){
-  if (buttonIndex==1) toastAlert("You have Clicked Ok Button");
+  //Success Callback function of confirmAlerter method
+  if (buttonIndex==1) toastAlert("You have Clicked Ok Button");//Based on the button pressed alerts shown
   else toastAlert("You have Clicked Cancel Button")
 }
           /*Prompt Box Methods*/
-//Used to Open Promptbox
+ 
 function promptAlerter(){
+  //Method to open a Promptbox
   navigator.notification.prompt("Enter Your Name",promptExit,"Prompt Dialog",['Save','Cancel']);
 }
 
-//Called when Promptbox Closed
+
 function promptExit(results){
+  //Success Callback function of promptAlerter method
   if (results.buttonIndex==1&&results.input1!="")toastAlert("Welcome "+results.input1);
   else toastAlert("Sorry to let you go"); 
 }
-          /*Beep Methods*/
-//Used to Produce Beep Button
+          
+ 
 function beepAlerter(){
+  //Method to generate default notification sound of the device twice
   navigator.notification.beep(2);
 }
 
@@ -365,55 +298,31 @@ function beepAlerter(){
 
 $(document).ready(function(){
     //DOM Fully Loaded
-          //Global Declarations
-    var iW=window.innerWidth;
-    var iH=window.innerHeight;
-    var hH=$('header').outerHeight() || 0;
-    var fH=$('footer').outerHeight() || 0;
-  //var hW=$('header').outerWidth() || 0;
-  //var fW=$('footer').outerWidth() || 0;
-    var canvas_ctx;
-    var x; // Circle x position
-    var y; // Circle Y position
-    var ax = 0;//Acceleration X axis
-    var ay = 0;//Acceleration Y axis
-    var vx = 0;// Velocity x axis
-    var vy = 0;// Velocity y axis    
-    var DISTANCE_FACTOR = .1;
-    var drawID;// Draw time interval.
-    var SPEED = 180;
-    var WIDTH = iW-20;                // Width of canvas
-    var HEIGHT = iH-hH-fH-5;               // -(hH+fH)Height of canvas
-    var RADIUS = 30;                // Width of circle object
-    var CIRCLE_COLOR = "#f00";      // Circle color
-    var CANVAS_COLOR = "#FAF7F8";   // Color of canvas background
-    var watchID;                    // Accelerometer.watchAcceleration return value. 
-    var drawID;                     // Draw time interval. 
-    var playing = true;             // Boolean if animation is playing.
-    var watch,networkState;
-          //var iW,iH,canvas,cnv,target,xPos,yPos
+          //Global Declarations    
+          var watch,networkState;          
           document.addEventListener("deviceready",function(){
-            //Device Ready
-           // showCanvas();
+                      //Device Ready
+           
             $(document).on("pageinit","#vibration",function() {
-        //Makes the Map to appear properly                                
-           if (device.platform=="iOS") $("#patternedvib").remove();                        
+                      //During the creation of vibration page                  
+           if (device.platform=="iOS") $("#patternedvib").remove();  //If platform is iOS remove the patterned vibration button                      
         });
             
 
             /**Network Check**/
-            if (navigator.connection.type=="none") customAlert("Please Connect to Internet for best perfomance","Network Request");
+            if (navigator.connection.type=="none") customAlert("Please Connect to Internet for best perfomance","Network Request");//If no internet is available during the deviceready alert generated
 
 
-                  /**BATTERY PLUGIN**/
+                  /**BATTERY PLUGIN call**/
 
             //Used for checking the battery status
           $("#btcha").tap(function(){ 
-            $(":mobile-pagecontainer").pagecontainer("change","#battery");          
-            window.addEventListener("batterystatus", onBatteryStatus, false);
+            //Binded with btcha li
+            $(":mobile-pagecontainer").pagecontainer("change","#battery"); //Change to Battery page         
+            window.addEventListener("batterystatus", onBatteryStatus, false);//Add batterystatus event
                       });
 
-                  /**CAMERA PLUGIN**/
+                  /**CAMERA PLUGIN calls **/
 
       //Used for taking Picture and returning the picture in Base64 format
       $("#tkpicbasebtn").tap(function(){        
@@ -426,88 +335,65 @@ $(document).ready(function(){
           navigator.camera.getPicture(onFileCameraSuccess, onCameraFail, { quality: 50,
     destinationType: Camera.DestinationType.FILE_URI });
         });
-
-      //Used for Opening the Gallery
-      /*$("#tkpicgallery").tap(function(){        
-        navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
-     {sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM});
-      }); */
-
+      
+      //Used for opening picture library
       $("#tkpiclibrary").tap(function(){
 navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
      {sourceType: Camera.PictureSourceType.PHOTOLIBRARY});
       });
 
-                /**CONTACT PLUGIN**/
+                /**CONTACT PLUGIN calls **/
 
       //Used to Prompt a Dialog to Enter new contact details and save 
-      $("#scbtn").tap(saveContact);//Method to Save Contacts
+      $("#scbtn").tap(saveContact);//Invokes saveContact method
       
-      $("#secbtn").tap(searchContact);//Method to Search Contacts  
+      $("#secbtn").tap(searchContact);//Invokes searchContact method  
 
-      $("#pickcontactbtn").tap(pickContact);//Method to Pick Contact 
+      $("#pickcontactbtn").tap(pickContact);//Invokes pickContact method 
 
-      $("#listcontactbtn").tap(listAllContacts);//Method to List all the Contacts 
+      $("#listcontactbtn").tap(listAllContacts);//Invokes listAllContacts method
 
-      $(document).on("tap","#contactlist li",function(){
-        specificContactFetch($(this).attr("id"));
-      });   
 
-                /**DEVICE PLUGIN**/
+
+                /**DEVICE PLUGIN calls **/
 
        //Used for Checking Device Informations
-      $("#deviceinfobtn").tap(deviceCheck);
+      $("#deviceinfobtn").tap(deviceCheck);//Invokes deviceCheck method
 
-                /**INTERNET-INFORMATION PLUGIN**/
+                /**INTERNET-INFORMATION PLUGIN call**/
 
       //Used for Checking Internet Informations
-      $("#connectchkbtn").tap(checkConnection);
-
-
-                /**DEVICE MOTION PLUGIN**/
-
-      //Used for Accelerometer Current Device Position
-      /*$("#accel").tap(function(){        
-        //accelBall();
-        showCanvas();
-      });
-
-      //Used for Accelerometer Device Movement tracking
-      $("#accelwatch").tap(function(){
-        var accelId=navigator.accelerometer.watchAcceleration(onWatchAccelSuccess,accelerometerError,{frequency:1000});
-      });*/
+      $("#connectchkbtn").tap(checkConnection);//Invokes checkConnection method
+                
 
       
 
-                /**DIALOGS PLUGIN**/
+                /**DIALOGS PLUGIN calls**/
 
     //Used for Opening the Alert box
-    $("#alertbtn").tap(dialogAlerter);
+    $("#alertbtn").tap(dialogAlerter);//Invokes dialogAlerter method
 
     //Used for Opening the Confirm box
-    $("#confirmbtn").tap(confirmAlerter);
+    $("#confirmbtn").tap(confirmAlerter);//Invokes confirmAlerter method
 
     //Used for Opening the Prompt box
-    $("#promptbtn").tap(promptAlerter);
+    $("#promptbtn").tap(promptAlerter);//Invokes promptAlerter method
 
     //Used for Producing Beep Alert
-    $("#beepbtn").tap(beepAlerter);
+    $("#beepbtn").tap(beepAlerter);//Invokes beepAlerter method
 
-              /**GEOLOCATION PLUGIN**/
+              /**GEOLOCATION PLUGIN call**/
 
     //Used for Getting the GPS info of the device
-    $("#curlocation").tap(function(){
-      //toastAlert("I am tapped");
+    $("#curlocation").tap(function(){  
+      //Binded with curlocation    
       var geoOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy:true};
       navigator.geolocation.getCurrentPosition(geolocationSuccess,geolocationError,geoOptions);
     });
 
-    //Used to Print GPS info in a paragraph
-    $("#locationwatch").tap(function(){
-      var geowatch=navigator.geolocation.watchPosition(onGeolocationSuccess,geolocationError);
-    });
+    
 
-    /**Vibration Plugin**/
+            /**VIBRATION PLUGIN call**/
 
     $("#simplevib").tap(function(){
       //Generates Simple Vibration
@@ -530,11 +416,10 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
 
     //Used to Show the Splash Screen
     $("#showsplash").tap(function(){
-      navigator.splashscreen.show();
+      navigator.splashscreen.show();//Shows splash screen
       setTimeout(function() {
         navigator.splashscreen.hide();
-    }, 3000);
-    //navigator.splashscreen.show(3000);
+    }, 3000);//Hides splash screen after 3 secs    
     });  
 
     //Displays information about the app
@@ -542,7 +427,7 @@ navigator.camera.getPicture(onFileCameraSuccess, onCameraFail,
       customAlert("PluginShop"+"\n"+"Version-0.0.1"+"\n"+"Developer-Dinesh Raja","About");
     });     
     
-    StatusBar.overlaysWebView(false);     
+    StatusBar.overlaysWebView(false);//Avoids  Statusbar overlaying webview    
       });         
           },false);
         
